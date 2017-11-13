@@ -1,26 +1,22 @@
-<ion-split-pane>
+<ion-split-pane side="right">
     
       <!-- logged out menu -->
       <ion-menu id="loggedOutMenu" [content]="content">
-    
         <ion-header>
           <ion-toolbar>
             <ion-title>Menu</ion-title>
           </ion-toolbar>
         </ion-header>
-    
         <ion-content class="outer-content">
-    
           <ion-list>
             <ion-list-header>
               Navigate
             </ion-list-header>
-            <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
-              <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
-              {{p.title}}
-            </button>
+              <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
+                <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
+                {{p.title}}
+              </button>
           </ion-list>
-    
           <ion-list>
             <ion-list-header>
               Account
@@ -30,7 +26,6 @@
               {{p.title}}
             </button>
           </ion-list>
-    
           <ion-list>
             <ion-list-header>
               Tutorial
@@ -41,20 +36,16 @@
             </button>
           </ion-list>
         </ion-content>
-    
       </ion-menu>
     
       <!-- logged in menu -->
       <ion-menu id="loggedInMenu" [content]="content">
-    
         <ion-header>
           <ion-toolbar>
             <ion-title>Menu</ion-title>
           </ion-toolbar>
         </ion-header>
-    
         <ion-content class="outer-content">
-    
           <ion-list>
             <ion-list-header>
               Navigate
@@ -64,7 +55,6 @@
               {{p.title}}
             </button>
           </ion-list>
-    
           <ion-list>
             <ion-list-header>
               Account
@@ -74,7 +64,6 @@
               {{p.title}}
             </button>
           </ion-list>
-    
           <ion-list>
             <ion-list-header>
               Tutorial
@@ -84,13 +73,8 @@
               Show Tutorial
             </button>
           </ion-list>
-    
         </ion-content>
-    
       </ion-menu>
-    
       <!-- main navigation -->
       <ion-nav [root]="rootPage" #content swipeBackEnabled="false" main name="app"></ion-nav>
-    
 </ion-split-pane>
-    <!-- <ion-nav [root]="rootPage"></ion-nav> -->

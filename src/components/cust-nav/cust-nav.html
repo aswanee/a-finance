@@ -16,15 +16,14 @@
             </div>
         </ion-title>
         <ion-buttons end>
-  
             <button clear ion-button item-end icon-only *ngFor="let b of Visablebuttons() " 
-            [ngStyle]="{'color': b.IconColor}" (click)="addNewEntry(b.BName)">
+                [ngStyle]="{'color': b.IconColor}" (click)="addNewEntry(b.BName)">
                 <ion-icon name="{{b.IconName}}"></ion-icon>
             </button>      
             <!-- <button clear ion-button item-end icon-only (click)="presentPopover($event)">
                 <ion-icon name="menu"></ion-icon>
             </button> -->
-            <button ion-button menuToggle>
+            <button ion-button menuToggle menu-toggle="right">
                 <ion-icon name="menu"></ion-icon>
             </button>
         </ion-buttons>

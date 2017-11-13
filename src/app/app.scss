@@ -14,6 +14,12 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 .ion-nav {
-  color: #123456;
-  background-color: #123456;
+  .scroll-content{
+    background-color: black!important;
+    color : white!important;
+  }
+  .list-header{
+    background-color: orange!important;
+    color: black!important;
+  }
 }
