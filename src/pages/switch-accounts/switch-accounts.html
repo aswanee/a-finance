@@ -1,0 +1,11 @@
+
+<ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="'SwitchAccounts' | Language"></cust-nav></ion-header>
+
+
+<ion-content>
+    <ion-item ion-item *ngFor="let item of Session?.result.UserAccounts;let i=index; let odd=odd; let even=even;" 
+    [ngClass]="{ odd: odd, even: even }" (click)="SwitchAccountsPage(i)">
+      <button text-start clear class="full" *ngIf="i==0">{{item}} - Selected Account</button>
+      <button text-start clear class="full" *ngIf="i!=0">{{item}}</button>  
+  </ion-item>
+</ion-content>

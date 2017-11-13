@@ -1,0 +1,40 @@
+<ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="'Create Alert' | Language"></cust-nav></ion-header>
+
+<ion-content padding>
+    <br>
+    <form [formGroup]="alertForm" (ngSubmit)="addAlert()">
+        <ion-item>
+            <ion-label>{{'Reuter' | Language}}</ion-label>
+            <ion-input type="text" formControlName="reuter"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{'Field' | Language}}</ion-label>
+            <ion-select [(ngModel)]="feild" formControlName="feild" multiple="false">
+                <ion-option *ngFor="let option of Fields">{{option | Language}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{'Type' | Language}}</ion-label>
+            <ion-select [(ngModel)]="type" formControlName="type" multiple="false">
+                <ion-option *ngFor="let option of Types">{{option | Language}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{'Criteria' | Language}}</ion-label>
+            <ion-select [(ngModel)]="criteria" formControlName="criteria" multiple="false">
+                <ion-option *ngFor="let option of Criterias">{{option | Language}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{'Value' | Language}}</ion-label>
+            <ion-input type="number" formControlName="value"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{'Notes' | Language}}</ion-label>
+            <ion-textarea type="text" formControlName="note"></ion-textarea>
+        </ion-item>
+        <br>
+        <button ion-button type="submit" block [disabled]="!alertForm.valid">{{'Submit' | Language}}</button>
+    </form>
+
+</ion-content>

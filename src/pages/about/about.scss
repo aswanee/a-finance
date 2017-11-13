@@ -1,0 +1,29 @@
+page-about {
+    .content{
+        background-image: url("../assets/img/bg.png")!important;
+        background-position: center; 
+        background-repeat: no-repeat;
+        background-color: black;
+    }
+    .content div{
+        padding: 10px;
+        color: orange;
+        //text-align: justify;
+        line-height: 25px;
+        border: 1px solid gray;
+        margin: 15px;
+        border-radius: 30px;
+    }
+
+    .align-right p
+    {
+        text-align: right!important;
+        padding: 10px;
+        color: orange;
+        text-align: justify;
+        line-height: 22px;
+        border: 1px solid gray;
+        margin: 10px;
+        border-radius: 30px;
+        font-size: 1.2rem;    }
+}

@@ -1,0 +1,95 @@
+<ion-header><cust-nav (pin)="GetCustNavID($event)" [buttons] = "buttons" [title]="'Alerts' | Language"></cust-nav></ion-header>
+
+
+<ion-content padding>
+    <ion-segment [(ngModel)]="SelectedSegment">
+        <ion-segment-button value="MatchedAlerts" >{{'Matched Alerts' | Language}}</ion-segment-button>
+        <ion-segment-button value="NotMatchedAlerts" >{{'Not-Matched Alerts' | Language}}</ion-segment-button>
+    </ion-segment>    
+    <div [ngSwitch]="SelectedSegment">
+        <ion-item *ngSwitchCase="'MatchedAlerts'" >
+            <ion-list *ngIf="matchedAlerts">
+                    <ion-row class="GridHeader" *ngIf="!isSmall">
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Reuter2' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Type' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Value' | Language}}</p>
+                        </ion-col>
+                        <ion-col col-3>
+                            <p style="font-size:0.9em;">{{'MetTime' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Field' | Language}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="GridHeader" *ngIf="isSmall">
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Reuter2' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Type' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Value' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'MetTime' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Field' | Language}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-item *ngFor="let alert of matchedAlerts; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                        <button ion-button full clear (click)="alertDetails(i, true)">
+                            <ion-col col><p style="font-size:0.8em;"> {{alert.Code}}</p> </ion-col>
+                            <ion-col col><p style="font-size:0.8em;"> {{Types[alert.Type] | Language}}</p></ion-col>
+                            <ion-col col><p style="font-size:0.8em;"> {{alert.Value}}</p></ion-col>
+                            <ion-col col-3><p style="font-size:0.8em;"> {{alert.MetTime}}</p></ion-col>
+                            <ion-col  col> <p style="font-size:0.8em;">{{Fields[alert.Field] | Language}}</p></ion-col>
+                        </button>
+                        <button ion-button item-end clear color="danger" icon-only (click)="deleteAlert(i, true)"><ion-icon name='trash' is-active="false"></ion-icon></button>
+                    </ion-item>
+            </ion-list>
+        </ion-item>
+        <ion-item *ngSwitchCase="'NotMatchedAlerts'" >
+            <ion-list  *ngIf="nonMatchedAlerts">
+                <ion-row class="GridHeader">
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Reuter2' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Type' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Value' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'SetTime' | Language}}</p>
+                        </ion-col>
+                        <ion-col col>
+                            <p style="font-size:0.9em;">{{'Criteria' | Language}}</p>
+                        </ion-col>
+                </ion-row>
+                <ion-item *ngFor="let alert of nonMatchedAlerts; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                        <button ion-button full clear (click)="alertDetails(i, false)">
+                            <ion-col col><p style="font-size:0.8em;"> {{alert.Code}} </p></ion-col>
+                            <ion-col col><p style="font-size:0.8em;"> {{Types[alert.Type] | Language}}</p></ion-col>
+                            <ion-col col><p style="font-size:0.8em;"> {{alert.Value}}</p></ion-col>
+                            <ion-col col-3><p style="font-size:0.8em;"> {{alert.SetTime}}</p></ion-col>
+                            <ion-col col><p style="font-size:0.8em;"> {{Fields[alert.Field] | Language}}</p></ion-col>
+                        </button>
+                        <button ion-button item-end clear color="danger" icon-only (click)="deleteAlert(i, false)"><ion-icon name='trash' is-active="false"></ion-icon></button>
+                </ion-item>
+            </ion-list>
+        </ion-item>
+    </div>
+    <button clear block ion-button (click)="goBack()">{{'Back' | Language}}</button>
+</ion-content>
+
+<ion-fab style="position:fixed; margin-bottom:6%; margin-right: 1%;" bottom right>
+    <button clear (click)="showcreateAlertForm()" ion-fab><p style="font-size:30px;">+</p></button>
+</ion-fab>

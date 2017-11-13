@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "12030250491",
+    "firebase_url": "https://arabfinance-6a12f.firebaseio.com",
+    "project_id": "arabfinance-6a12f",
+    "storage_bucket": "arabfinance-6a12f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12030250491:android:4a6cf97c49479556",
+        "android_client_info": {
+          "package_name": "push.arabfinance.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "12030250491-is19au2mgb8368dkdlhvtu8lrerjhji3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADNEwpvg5UjR9TkIJndy_4UMkuiqgvUkE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

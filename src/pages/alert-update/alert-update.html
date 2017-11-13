@@ -1,0 +1,38 @@
+
+<ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="'UpdateAlert' | Language"></cust-nav></ion-header>
+
+
+<ion-content padding>
+  <br>
+  <form [formGroup]="alertForm" (ngSubmit)="updateAlert()">
+    <ion-item>
+      <ion-label>Field</ion-label>
+      <ion-select [(ngModel)]="feild" formControlName="feild" multiple="false">
+        <ion-option *ngFor="let option of Fields">{{option}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Types</ion-label>
+      <ion-select [(ngModel)]="type" formControlName="type" multiple="false">
+        <ion-option *ngFor="let option of Types">{{option}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Criteria</ion-label>
+      <ion-select [(ngModel)]="criteria" formControlName="criteria" multiple="false">
+        <ion-option *ngFor="let option of Criterias">{{option}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Value</ion-label>
+      <ion-input type="number" formControlName="value"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Note</ion-label>
+      <ion-textarea type="text" formControlName="note"></ion-textarea>
+    </ion-item>
+    <br>
+    <button ion-button type="submit" block [disabled]="!alertForm.valid">Submit</button>
+  </form>
+
+</ion-content>

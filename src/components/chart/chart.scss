@@ -1,0 +1,23 @@
+Com-chart {
+    chart {
+        display: block; 
+      }
+      .colors {
+        background-color:#F3B32A; 
+        background-color:#50B432; 
+        background-color:#ED561B; 
+        background-color:#DDDF00; 
+        background-color:#24CBE5; 
+        background-color:#64E572; 
+        background-color:#FF9655; 
+        background-color:#FFF263; 
+        background-color:#333331
+      }
+      .highcharts-button rect {
+          fill:#F3B32A; 
+      }
+      
+      .highcharts-button-disabled text {
+        fill:#424242 !important; 
+      }
+}

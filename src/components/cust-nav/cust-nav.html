@@ -1,0 +1,31 @@
+<!-- Generated template for the CustNavComponent component -->
+    <ion-navbar>
+        <ion-title center>
+           <div *ngIf="Session && Session.result" class="status info" style="font-size: 1.3rem;">
+                <span *ngIf="Session.result.GeneralInfo.UserName" >{{'welcome' | Language}} </span>
+                <!-- <span *ngIf="Session.result.GeneralInfo.UserName" >{{Session.result.GeneralInfo.UserName}} </span> -->
+                <span *ngIf="Session.result.UserAccounts[0]" > {{Session.result.UserAccounts[0]}}</span>
+           </div> 
+           <div class="status">
+                <label style="color:red!important;border: 1px solid red!important;" calss="status closed" *ngIf="marketservice.MarketStatus.Status=='Close'" >Closed</label>
+                <label style="color:green!important;border: 1px solid green!important;"  calss="status open" *ngIf="marketservice.MarketStatus.Status!='Close'">Open</label>
+                <span style="color:rgb(255, 255, 255);font-size: 12px"></span>
+                <span class="title">
+                    {{title}}
+                </span>
+            </div>
+        </ion-title>
+        <ion-buttons end>
+  
+            <button clear ion-button item-end icon-only *ngFor="let b of Visablebuttons() " 
+            [ngStyle]="{'color': b.IconColor}" (click)="addNewEntry(b.BName)">
+                <ion-icon name="{{b.IconName}}"></ion-icon>
+            </button>      
+            <!-- <button clear ion-button item-end icon-only (click)="presentPopover($event)">
+                <ion-icon name="menu"></ion-icon>
+            </button> -->
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>

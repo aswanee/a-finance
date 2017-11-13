@@ -1,0 +1,438 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+// Font path is used to include ionicons,
+// roboto, and noto sans fonts
+$font-path: "../assets/fonts";
+
+$fa-font-path: "../assets/font-awesome-4.7.0/fonts";
+
+// @import url(http://fonts.googleapis.com/earlyaccess/notokufiarabic.css);
+// $font-family-base: "Noto Kufi Arabic", sans-serif !default;
+
+// The app direction is used to include
+// rtl styles in your app. For more info, please see:
+// http://ionicframework.com/docs/theming/rtl-support/
+$app-direction: multi;
+
+@import "ionic.globals";
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  
+    primary:    #000000,
+    secondary:  #32db64,
+    danger:     #d91e18,
+    light:      #f4f4f4,
+    dark:       #222, 
+    orang: (
+      base: orange ,
+      contrast: #ffffff
+    ),
+    Toggel:   rgba(255, 172, 20, 0.42),
+  
+  ) !default;
+/////////////////////////////////////////Begin Rashed///////////////////////////////////////////////
+
+  $fab-size: 50px; //Change value to whatever size you want
+
+  
+  
+  $text-color:                 #fff !default;
+  $link-color:                 color($colors, light) !default;
+  $background-color:           #191919 !default;
+  $subdued-text-color:         #A1DDA6 !default;
+
+  $font-family-base:           "DroidSansArabicRegular" , "Helvetica Neue", sans-serif !default;
+  $font-size-base:             1.4rem !default; // 1.4rem == 14px
+  
+  $content-padding:            16px !default;
+  $content-margin:             16px !default;
+  
+  $toolbar-background:         #151515 !default;
+  $toolbar-border-color:       #222 !default;
+  $toolbar-text-color:         $text-color !default;
+  $toolbar-active-color:       $link-color !default;
+  $toolbar-inactive-color:     #8c8c8c !default;
+  
+  $tabs-background:            #151515 !default;
+  $tabs-border-color:          #222 !default;
+  $tabs-tab-color-inactive:    #8c8c8c !default;
+  $tabs-tab-color-active:      $link-color !default;
+  
+  $list-text-color:            $text-color !default;
+  $list-background-color:      #000 !default;
+  $list-border-color:          #242424 !default;
+  // $toolbar-active-color: #FFF;
+  // $segment-button-md-text-color-activated:	$toolbar-active-color;
+  
+  // $tabs-background : red;
+  
+
+//===============================================================================
+  $colors-md: copy-colors($colors) !default;
+  
+  
+  $text-md-color:                       $text-color !default;
+  $background-md-color:                 $background-color !default;
+  $subdued-text-md-color:               $subdued-text-color !default;
+  
+  $font-family-md-base:                 $font-family-base !default;
+  $font-size-md-base:                   $font-size-base !default;
+  
+  
+  // Material Design Outer content
+  // --------------------------------------------------
+  $outer-content-md-background-color:   $background-color !default;
+  
+  
+  // Material Design Toolbar
+  // --------------------------------------------------
+  
+  $toolbar-md-background:               $toolbar-background !default;
+  $toolbar-md-border-color:             $toolbar-border-color !default;
+  $toolbar-md-text-color:               #fff !default;
+  $toolbar-md-active-color:             $toolbar-active-color !default;
+  $toolbar-md-inactive-color:           $toolbar-inactive-color !default;
+  
+  
+  // Material Design Tabs
+  // --------------------------------------------------
+  
+  $tabs-md-background:                  $tabs-background !default;
+  $tabs-md-tab-color-inactive:          $tabs-tab-color-inactive !default;
+  $tabs-md-tab-color-active:            $tabs-tab-color-active !default;
+  
+  
+  // Material Design Card
+  // --------------------------------------------------
+  
+  $card-md-header-color:                #ddd !default;
+  $card-md-title-text-color:            #fff !default;
+  $card-md-text-color:                  #ddd !default;
+  
+  
+  // Material Design List
+  // --------------------------------------------------
+  
+  $list-md-text-color:                  $list-text-color !default;
+  $list-md-border-color:                rgba(255, 162, 0, 0) !default;
+  $list-md-background-color:            $list-background-color !default;
+  $list-md-activated-background-color:  #d9d9d9 !default;
+  
+  
+  // Material Design Item
+  // --------------------------------------------------
+  $item-md-padding-top:                 6px !default;
+  // deprecated
+  $item-md-padding-right:               6px !default;
+  $item-md-padding-end:                 $item-md-padding-right !default;
+  $item-md-padding-bottom:              6px !default;
+  // deprecated
+  $item-md-padding-left:                6px !default;
+  $item-md-padding-start:               $item-md-padding-left !default;
+  $item-md-padding-media-top:           9px !default;
+  $item-md-padding-media-bottom:        9px !default;
+  $item-md-padding-icon-top:            11px !default;
+  $item-md-padding-icon-bottom:         10px !default;
+  $item-md-divider-background:          #000000 !default;
+  $item-md-divider-color:               #f4f4f4 !default;
+  $item-md-font-size:                   $font-size-md-base;
+  $item-md-paragraph-text-color:	      #F5F4F4 !default;
+  $item-ios-paragraph-text-color:	      #F5F4F4 !default;
+  //$item-ios-paragraph-font-size	:       1.4rem	;
+  // Material Design Toggle
+  // ---------------------------------------------------
+  $toggle-md-handle-background-color-off: #f4f4f4 !default;
+  $segment-button-md-font-size: 1.3rem;
+  
+  // Ripple Color
+  // --------------------------------------------------
+
+  @function ripple-background-color($button-color) {
+    @return rgba(red($button-color), green($button-color), blue($button-color), .1);
+  }
+  .button-border{
+    border-bottom: 0.005em  solid rgb(99, 81, 50) !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    
+  }
+  .button-fab {
+    z-index: 100;
+    position: fixed;
+  }
+  .odd {
+    background-color: #242424 !important;
+    border-bottom: 0.005em  solid rgb(99, 81, 50) !important;
+  }
+  .odd ion-row{
+    color: #fff !important; 
+  }
+
+  .even {
+    background-color: #000 !important;
+    border-bottom: 0.01em  solid rgb(99, 81, 50) !important;
+  }
+  .even ion-row{
+    color: #fff !important; 
+  }
+
+  .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+    color: orange !important;
+}
+.tabs-md .tab-button-icon {
+  color: rgba(140, 140, 140, 0.7);
+ }
+ .tabs-md .tab-button[aria-selected=true] {
+  color: orange !important;
+}
+.tabs-md .tab-button {
+  color: #FFFFFF !important;
+}
+.tabs-md .tab-button .tab-button-icon {
+  color: #FFFFFF !important;
+}
+  .col[_ngcontent-c0],.col[_ngcontent-c1]  {
+    background: #191919 !important;
+    border: think solid black !important;
+    // line-height: 1.7;
+  }
+  .highcharts-scrollbar-thumb
+  {
+    fill:#797474 !important;
+  }
+  .highcharts-scrollbar-button
+  {
+    fill:#030E1A !important;
+    
+  }
+  .highcharts-scrollbar-arrow{
+    fill:orange !important;
+  }
+  .gainColor{
+    color:#32db64 !important; font-weight: bolder !important;
+  }
+  .loosColor{
+    color: red !important; font-weight: bolder !important;
+  }
+  .highcharts-button-pressed rect{
+    fill: orange !important;
+}
+.highcharts-button-pressed text{
+    fill: #FFFFFF !important;
+}
+//selected 	font white	bg dark orang font white 
+
+.highcharts-button-normal rect{
+    fill: orange!important;
+}
+.highcharts-button-normal text{
+    fill: black!important;
+}
+//unselected 	font gray	bn orang font blak 
+
+
+.highcharts-button-disabled rect{
+    fill: #DADADA !important;
+}
+.highcharts-button-disabled text{
+    fill: black !important;
+}
+//desiable 	fon blak	bg gray black
+
+  // .highcharts-range-selector-buttons text
+  // {
+  //   color: #666666 !important;
+  //   cursor: default;
+  //   font-size: 11px;
+  //   fill: #FFFFFF !important;
+  // }
+  // .highcharts-button-normal text
+  // {
+  //   color: #666666 !important;
+  //   cursor: default;
+  //   font-size: 11px;
+  //   fill: #979595 !important;
+  // }
+  .highcharts-axis-labels text
+  {
+    color: #666666 !important;
+    cursor: default;
+    font-size: 11px;
+    fill: #FFFFFF !important;
+  }
+  .highcharts-xaxis-labels text
+  {
+    color: #666666 !important;
+    cursor: default;
+    font-size: 11px;
+    fill: #FFFFFF !important;
+  }
+  @-webkit-keyframes fadeItDown {
+    0%   { background-color: rgba(0,0,0,0); }
+    50%  { background-color: red; }
+    100% { background-color: rgba(0,0,0,0); }
+  }
+
+  @-moz-keyframes fadeItDown {
+    0%   { background-color: rgba(0,0,0,0); }
+    50%  { background-color: red; }
+    100% { background-color: rgba(0,0,0,0); }
+  }
+
+  @-o-keyframes fadeItDown {
+    0%   { background-color: rgba(0,0,0,0); }
+    50%  { background-color: red; }
+    100% { background-color: rgba(0,0,0,0); }
+  }
+
+  @keyframes fadeItDown {
+    0%   { background-color: rgba(0,0,0,0); }
+    50%  { background-color: red; }
+    100% { background-color: rgba(0,0,0,0); }
+  }
+
+  @-webkit-keyframes fadeItUp {
+    0%   { background-color: rgba(0,0,0,0); }
+    50%  { background-color: #32db64; }
+    100% { background-color: rgba(0,0,0,0); }
+  }
+
+  @-moz-keyframes fadeItUp {
+    0%   { background-color: rgba(0,0,0,0); }
+    50%  { background-color: #32db64; }
+    100% { background-color: rgba(0,0,0,0); }
+  }
+
+  @-o-keyframes fadeItUp {
+    0%   { background-color: rgba(0,0,0,0); }
+    50%  { background-color: #32db64; }
+    100% { background-color: rgba(0,0,0,0); }
+  }
+
+  @keyframes fadeItUp {
+    0%   { background-color: rgba(0,0,0,0); }
+    50%  { background-color: #32db64; }
+    100% { background-color: rgba(0,0,0,0); }
+  }
+
+  .fadeUp{    
+    background-image:none !important;
+    -webkit-animation: fadeItUp 400ms ease-in-out; 
+      -moz-animation: fadeItUp 400ms ease-in-out; 
+        -o-animation: fadeItUp 400ms ease-in-out; 
+            animation: fadeItUp 400ms ease-in-out; 
+  }
+  .fadeUp2{    
+    background-image:none !important;
+    -webkit-animation: fadeItUp 400ms ease-in-out; 
+      -moz-animation: fadeItUp 400ms ease-in-out; 
+        -o-animation: fadeItUp 400ms ease-in-out; 
+            animation: fadeItUp 400ms ease-in-out; 
+  }
+  .fadeDown{    
+    background-image:none !important;
+    -webkit-animation: fadeItDown 400ms ease-in-out; 
+      -moz-animation: fadeItDown 400ms ease-in-out; 
+        -o-animation: fadeItDown 400ms ease-in-out; 
+            animation: fadeItDown 400ms ease-in-out; 
+  }
+  .fadeDown2{    
+    background-image:none !important;
+    -webkit-animation: fadeItDown 400ms ease-in-out; 
+      -moz-animation: fadeItDown 400ms ease-in-out; 
+        -o-animation: fadeItDown 400ms ease-in-out; 
+            animation: fadeItDown 400ms ease-in-out; 
+  }
+  .button-clear-md{
+    color: #FEFEFF !important;
+  }
+  
+.GridHeader{
+  background-color: rgba(255, 172, 20, 0.42) !important;
+}
+.button-md {box-shadow: none !important;}
+// .item-md .item-input .item-inner { box-shadow: none !important; } 
+.list-md .item-input:last-child {  box-shadow: none !important; }
+.segment-md .segment-button {
+  color: #ffffff!important;
+  opacity: 1!important;
+}
+.segment-md .segment-button.activated, .segment-md 
+.segment-button.segment-activated {
+  border-color: orange!important;
+  opacity: 1;
+  color: orange!important;
+}
+.bnrashed
+{
+  background-color: brown;
+}
+// .item-inner{
+//   border-bottom: 1px solid orange !important;
+// }
+// .segment-button ion-icon{
+//   //font-size: 1.4em!important;
+// }
+/////////////////////////////////////////Begin Rashed///////////////////////////////////////////////
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/ionicons/
+
+@import "ionic.ionicons";
+
+// Fonts
+// --------------------------------------------------
+
+//@import "roboto";
+@import "noto-sans";
+
+
+/* droid_sans_arabicregular*/ 
+@font-face {
+  font-family:DroidSansArabicRegular;
+  src: url('../assets/myfonts/droidsansarabic.eot');
+  src: url('../assets/myfonts/droidsansarabic.eot') format('embedded-opentype'),
+       url('../assets/myfonts/droidsansarabic.ttf') format('truetype'),
+       url('../assets/myfonts/droidsansarabic.svg#DroidSansArabicRegular') format('svg');
+}
+//  $fa-font-path: "../assets/font-awesome-4.7.0/fonts";
+//  @import 'FontAwesome';

@@ -1,0 +1,16 @@
+popover {
+    .mnuitem{
+        background-color: #756f6f!important;
+    }
+    .mnuitem button {
+        color: rgb(255, 255, 255)!important;
+        background-color: #756f6f!important;
+    }
+    .separator-item{
+        border-bottom: 1px solid rgb(255, 255, 255);
+    }
+    ion-icon{
+        margin-inline-start: 2px;
+        margin-inline-end: 10px;
+    }
+}

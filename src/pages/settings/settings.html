@@ -1,0 +1,12 @@
+<ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="'Settings' | Language"></cust-nav></ion-header>
+
+<ion-content padding>
+    <ion-content>
+        <button ion-item (click)="toen()">
+            {{'BTN_ENGLISH'|Language}}
+        </button>
+        <button ion-item (click)="toarab()">
+            {{'BTN_Arabic'|Language}}
+        </button>
+    </ion-content>
+</ion-content>

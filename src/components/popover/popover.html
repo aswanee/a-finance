@@ -1,0 +1,37 @@
+<ion-list no-margin no-padding>
+    <ion-item class="mnuitem separator-item" *ngIf="!loggedIn">
+        <button ion-item (click)="login()" full block>
+			<ion-icon style="Color : orange"name="ios-card"></ion-icon> {{'Login' | Language}}
+		</button>
+    </ion-item>
+    <ion-item class="mnuitem separator-item" *ngIf="loggedIn">
+        <button ion-item (click)="logout()" full block>
+			<ion-icon style="Color : orange"name="star"></ion-icon> {{'Logout' | Language}}
+		</button>
+    </ion-item>
+    <ion-item class="mnuitem separator-item" *ngIf="loggedIn">
+        <button ion-item (click)="goToAlerts()" full block>
+			<ion-icon style="Color : orange"name="ios-apps-outline"></ion-icon> {{'Alerts' | Language}}
+		</button>
+    </ion-item>
+    <ion-item class="mnuitem separator-item">
+        <button ion-item (click)="goToSettings()" full block>
+			<ion-icon style="Color : orange"name="ios-code-working"></ion-icon> {{'Change Language' | Language}}
+		</button>
+    </ion-item>
+    <ion-item class="mnuitem" *ngIf="!loggedIn">
+        <button ion-item (click)="goToAbout()" full block>
+			<ion-icon style="Color : orange"name="ios-beer-outline"></ion-icon> {{'About Us title' | Language}}
+		</button>
+    </ion-item>
+    <ion-item class="mnuitem separator-item" *ngIf="loggedIn">
+        <button ion-item (click)="goToAbout()" full block>
+			<ion-icon style="Color : orange"name="ios-beer-outline"></ion-icon> {{'About Us title' | Language}}
+		</button>
+    </ion-item>
+    <ion-item class="mnuitem" *ngIf="loggedIn&&(Session?.result.UserAccounts.length>0)">
+        <button ion-item  (click)="gotoSwitch()" full block>
+			<ion-icon style="Color : orange"name="ios-bicycle"></ion-icon> {{'SwitchAccounts' | Language}}
+		</button>
+    </ion-item>
+</ion-list>

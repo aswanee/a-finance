@@ -1,0 +1,97 @@
+<ion-header>
+  <cust-nav (pin)="GetCustNavID($event)" [title]="reuter"></cust-nav>
+</ion-header>
+
+
+<ion-content>
+  <ion-segment [(ngModel)]="ChartParts">
+          <ion-segment-button value="IntraDay" (click)="showIntraDays()">
+                  <!-- <ion-icon name="cart" item-start></ion-icon> -->
+                  {{'Intra' | Language}}
+              </ion-segment-button>
+              <ion-segment-button value="Historical" (click)="showHistoricalDays()">
+                  <!-- <ion-icon name="cart"></ion-icon> -->
+                  {{'Hist' | Language}}
+              </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="ChartParts">
+          <ion-list *ngSwitchCase="'IntraDay'">
+              <!-- <page-chart [isIntraDays] = "isIntraDays" [rouiterCode]="reuter"></page-chart> -->
+              <Com-chart  [isIntraDays] = "isIntraDays" [rouiterCode]="reuter"></Com-chart>              
+          </ion-list>
+          <ion-list *ngSwitchCase="'Historical'">
+              <!-- <page-chart [isIntraDays] = "isIntraDays" [rouiterCode]="reuter"></page-chart> -->
+              <Com-chart [isIntraDays] = "isIntraDays" [rouiterCode]="reuter"></Com-chart>              
+          </ion-list>                        
+  </div>
+
+  <ion-segment [(ngModel)]="QueteParts">
+      <ion-segment-button value="News" (click)="setnews()">
+          <ion-icon name="cart" item-start></ion-icon>
+          {{'News' | Language}}
+      </ion-segment-button>
+      <ion-segment-button value="Orders" (click)="setasksbids()">
+          <ion-icon name="cart"></ion-icon>
+          {{'Show Orders' | Language}}
+      </ion-segment-button>
+      <ion-segment-button value="Trades" (click)="settrades()">
+          <ion-icon name="cart"></ion-icon>
+          {{'Trades' | Language}}
+      </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="QueteParts">
+      <ion-list *ngSwitchCase="'Orders'">
+          <ion-grid>
+              <ion-row>
+                  <ion-col col-6>
+                      <table width="100%" class="bidask">
+                          <th colspan="3"><strong>{{'Asks' | Language}}</strong></th>
+                          <tr *ngFor="let item of Asks?.result  let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                              <td>{{item[0]}}</td>
+                              <td>{{item[1]}}</td>
+                              <td>{{item[2]}}</td>
+                              <td>{{item[3]}}</td>
+                            </tr>
+                      </table>
+                  </ion-col>
+                  <ion-col col-6>
+                      <table width="100%" class="bidask">
+                          <th colspan="3"><strong>{{'Bids' | Language}}</strong></th>
+                          <tr *ngFor="let item of Bids?.result  let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                              <td>{{item[0]}}</td>
+                              <td>{{item[1]}}</td>
+                              <td>{{item[2]}}</td>
+                              <td>{{item[3]}}</td>
+                            </tr>
+                      </table>
+                  </ion-col>
+              </ion-row>
+          </ion-grid>
+      </ion-list>
+      <ion-list *ngSwitchCase="'Trades'">
+          <ion-grid *ngIf="Trades">
+              <ion-row *ngFor="let item of Trades?.result let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                  <ion-col>{{item[0]}}</ion-col>
+                  <ion-col>{{item[1]}}</ion-col>
+                  <ion-col>{{item[2]}}</ion-col>
+                  <ion-col>{{item[3]}}</ion-col>
+              </ion-row>
+          </ion-grid>
+          <ion-item *ngIf="Trades?.result.length===0 ">
+              <ion-icon name="sad" color='danger' style="margin-left: 10%; font-size: 30px;"></ion-icon>
+              &nbsp; &nbsp; &nbsp;
+              <strong> {{'No Trades Yet' | Language}} </strong>
+          </ion-item>
+      </ion-list>
+      <ion-list *ngIf=shownews>
+          <ion-item *ngFor="let item of relNews?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+              <button text-start clear class="full"  (click)="getdetails(item[0])">
+                      <div class="pThumb" item-text-wrap>
+                          <p text-wrap>{{item[1]}}</p>
+                          <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
+                      </div>                        
+              </button>
+          </ion-item>
+      </ion-list>
+  </div>
+</ion-content>

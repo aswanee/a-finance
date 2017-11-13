@@ -1,0 +1,63 @@
+<ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="GetTitleWithOrderid('Order' | Language )"></cust-nav></ion-header>
+
+<h1>{{userorderhistoryresponse?.result.ReutersCode}}</h1>
+<ion-grid *ngIf="userorderhistoryresponse">
+    <h1>{{'Details' | Language}}</h1>
+    <ion-item>
+        <ion-row>
+            <ion-col>
+                {{'Status' | Language}}:
+            </ion-col>
+            <ion-col>
+                {{showOrderStatus(userorderhistoryresponse?.result.Status) | Language}}
+            </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <ion-row>
+            <ion-col>{{'Executed Quantity' | Language}}:</ion-col>
+            <ion-col>
+                {{userorderhistoryresponse?.result.ExecutedQuantity}}
+            </ion-col>
+        </ion-row>
+    </ion-item>
+    <!-- <ion-col>
+        {{userorderhistoryresponse?.result.}}
+    </ion-col>
+    <ion-col>
+        {{userorderhistoryresponse?.result.ExpireAt}}
+    </ion-col> -->
+</ion-grid>
+<h1>{{'Actions' | Language}}</h1>
+<ion-grid *ngFor="let item of userorderhistoryresponse?.result.details ">
+    <ion-item>
+        <ion-row>
+            <ion-col>{{'Place Type' | Language}}: </ion-col>
+            <ion-col> {{showPlaceType(item.PlaceType) | Language}} </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <ion-row>
+            <ion-col> {{'Price' | Language}}:</ion-col>
+            <ion-col> {{item.Price}} </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <ion-row>
+            <ion-col>{{'Price Type' | Language}}:</ion-col>
+            <ion-col> {{showPriceType(item.PriceType)}} </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <ion-row>
+            <ion-col>{{'Quantity' | Language}}:</ion-col>
+            <ion-col> {{item.Quantity}} </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <ion-row>
+            <ion-col>{{'Sent Time' | Language}}:</ion-col>
+            <ion-col>{{item.strSentTime}}</ion-col>
+        </ion-row>
+    </ion-item>
+</ion-grid>

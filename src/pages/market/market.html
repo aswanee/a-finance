@@ -1,0 +1,266 @@
+<ion-header>
+    <cust-nav (pin)="GetCustNavID($event)" [title]="'Market' | Language"></cust-nav>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="Indices&&BP&&WP&&BV">
+        <ion-item class="GridHeader">
+            <ion-row text-center>
+                <ion-col col>
+                    <p>{{'Reuter'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Value' |Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Change' |Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Percentage' | Language}}</p>
+                </ion-col>
+                <ion-col col *ngIf="!this.isSmall">
+                    <p>{{'TurnOver' | Language}}</p>
+                </ion-col>
+                <ion-col col *ngIf="!this.isSmall">
+                    <p>{{'Volume' | Language}}</p>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-buttons *ngIf="EGX30 && EGX70 && EGX100">
+
+            <button ion-button [clear]=!show30   full (click)="showHideChart(0)" [ngClass]="['button-border',egx30Selected , egx30DirRow]">
+                <ion-col col text-start style="color:#ffa500;font-weight: bold;"> {{EGX30?.result[0][0]}}</ion-col><!--ReutersCode-->
+                <ion-col col [ngClass]="egx30Dir"> {{EGX30?.result[0][1]}}</ion-col><!--LastTrade-->
+                <ion-col col> {{EGX30?.result[0][2]}}</ion-col><!--NetChange-->
+                <ion-col col> {{EGX30?.result[0][3]}}%</ion-col><!--PercentageChange-->
+                <ion-col col *ngIf="!this.isSmall"> {{EGX30?.result[0][4] | aroundTo: 0}}</ion-col><!--TurnOver-->
+                <ion-col col *ngIf="!this.isSmall"> {{EGX30?.result[0][5] | aroundTo: 0}}</ion-col><!--Volume-->
+                <!-- <ion-col col>
+                    <ion-icon right *ngIf="EGX30?.result[0][2]>0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon *ngIf="EGX30?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
+                </ion-col> -->
+            </button>
+
+            <button ion-button  [clear]=show70   full (click)="showHideChart(1)" [ngClass]="['button-border',egx70Selected , egx70DirRow]">
+                <ion-col col text-start style="color:#ffa500;font-weight: bold;"> {{EGX70?.result[0][0]}} </ion-col>
+                <ion-col col [ngClass]="egx70Dir"> {{EGX70?.result[0][1]}}</ion-col>
+                <ion-col col> {{EGX70?.result[0][2]}}</ion-col>
+                <ion-col col> {{EGX70?.result[0][3]}}%</ion-col>
+                <ion-col col *ngIf="!this.isSmall"> {{EGX70?.result[0][4] | aroundTo: 0}}</ion-col>
+                <ion-col col *ngIf="!this.isSmall"> {{EGX70?.result[0][5] | aroundTo: 0}}</ion-col>
+                <!-- <ion-col  col>
+                    <ion-icon right *ngIf="EGX70?.result[0][2]> 0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon *ngIf="EGX70?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
+                </ion-col> -->
+            </button>
+
+            <button ion-button [clear]=!show100  full (click)="showHideChart(2)" [ngClass]="['button-border',egx100Selected , egx100DirRow]">
+                <ion-col col text-start style="color:#ffa500;font-weight: bold;"> {{EGX100?.result[0][0]}} </ion-col>
+                <ion-col col [ngClass]="egx100Dir"> {{EGX100?.result[0][1]}}</ion-col>
+                <ion-col col> {{EGX100?.result[0][2]}}</ion-col>
+                <ion-col col> {{EGX100?.result[0][3]}}%</ion-col>
+                <ion-col col *ngIf="!this.isSmall"> {{EGX100?.result[0][4] | aroundTo: 0}}</ion-col>
+                <ion-col col *ngIf="!this.isSmall"> {{EGX100?.result[0][5] | aroundTo: 0}}</ion-col>
+                <!-- <ion-col  col>
+                    <ion-icon right *ngIf="EGX100?.result[0][2]> 0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon *ngIf="EGX100?.result[0][2] < 0" name="md-trending-down" color="danger"></ion-icon>
+                </ion-col> -->
+            </button>
+        </ion-buttons>
+        <ion-item *ngIf="EGX30 && EGX70 && EGX100">
+            <ion-segment [(ngModel)]="ChartParts">
+                <ion-segment-button value="IntraDay" (click)="showIntraDays()">
+                    {{'Intra' | Language}}
+                </ion-segment-button>
+                <ion-segment-button value="Historical" (click)="showHistoricalDays()">
+                    {{'Hist' | Language}}
+                </ion-segment-button>
+            </ion-segment>
+
+            <Com-chart *ngIf="lastFveDays && show30"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX30.result[0][0]">
+            </Com-chart>
+            <Com-chart *ngIf="!lastFveDays && show30"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX30.result[0][0]">
+            </Com-chart>
+
+            <Com-chart *ngIf="lastFveDays && show70"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX70.result[0][0]">
+            </Com-chart>
+            <Com-chart *ngIf="!lastFveDays && show70"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX70.result[0][0]">
+            </Com-chart>
+
+            <Com-chart *ngIf="!lastFveDays && show100"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX100.result[0][0]">
+            </Com-chart>
+            <Com-chart *ngIf="lastFveDays && show100"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX100.result[0][0]">
+            </Com-chart>
+        </ion-item>
+    </div>
+
+
+    <ion-segment padding [(ngModel)]="SelectedPerform">
+        <ion-segment-button value="BP" (click)="setPerform('BP')">
+            <ion-icon name="arrow-up" class="icon-padding" item-start></ion-icon>
+            {{'BP' | Language}} 
+        </ion-segment-button>
+        <ion-segment-button value="BV" (click)="setPerform('BV')">
+            <ion-icon name="list" class="rotate-270 icon-padding"></ion-icon> 
+            {{'BV' | Language}} 
+        </ion-segment-button>
+        <ion-segment-button value="WP" (click)="setPerform('WP')">
+            <ion-icon name="arrow-down" class="icon-padding" color="danger"></ion-icon>
+            {{'WP' | Language}}
+        </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="SelectedPerform">
+    <div *ngSwitchCase="'BP'">
+        <ion-item class="GridHeader">
+            <ion-row text-center >
+                <ion-col col>
+                    <p>{{'Reuter'|Language }}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Value' |Language }}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Percentage' |Language }}</p>
+                </ion-col>
+                <ion-col col *ngIf="!this.isSmall">
+                    <p>{{'Change' |Language }}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Volume' | Language }}</p>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-item *ngFor="let x of BP?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+            <button clear class="full"  (click)="setstockchosen(x[0])">
+                <ion-row text-center>
+                    <ion-col  style="color:#ffa500;font-weight: bold;">{{x[0]}}</ion-col>
+                    <ion-col>{{x[1]}}</ion-col>
+                    
+                    <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[2]}}</ion-col>
+                    <ion-col  *ngIf="x[2]>0 && !this.isSmall"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[4]}}</ion-col>
+                    
+                    <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[2]}}</ion-col>
+                    <ion-col  *ngIf="x[2]<0 && !this.isSmall"  style="color:red; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[4]}}</ion-col>
+                    
+                    <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
+                    <ion-col  *ngIf="x[2]==0 && !this.isSmall">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]==0">{{x[4]}}</ion-col>
+                    <!-- <ion-col  col>
+                            <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
+                            <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
+                    </ion-col>                         -->
+                </ion-row>
+            </button>   
+        </ion-item>                     
+    </div>
+    <div *ngSwitchCase="'BV'">
+        <ion-item class="GridHeader">
+            <ion-row text-center >
+                <ion-col col>
+                    <p>{{'Reuter'|Language }}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Value' |Language }}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Percentage' |Language }}</p>
+                </ion-col>
+                <ion-col col *ngIf="!this.isSmall">
+                    <p>{{'Change' |Language }}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Volume' | Language }}</p>
+                </ion-col>
+            </ion-row> 
+        </ion-item>
+        <ion-item *ngFor="let x of BV?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+            <button clear class="full"  (click)="setstockchosen(x[0])">
+                <ion-row text-center>
+                    <ion-col  style="color:#ffa500;font-weight: bold;">{{x[0]}}</ion-col>
+                    <ion-col>{{x[1]}}</ion-col>
+                    
+                    <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[2]}}</ion-col>
+                    <ion-col  *ngIf="x[2]>0 && !this.isSmall"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[4]}}</ion-col>
+                    
+                    <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[2]}}</ion-col>
+                    <ion-col  *ngIf="x[2]<0 && !this.isSmall"  style="color:red; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[4]}}</ion-col>
+                    
+                    <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
+                    <ion-col  *ngIf="x[2]==0 && !this.isSmall">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]==0">{{x[4]}}</ion-col>
+                    <!-- <ion-col  col>
+                            <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
+                            <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
+                    </ion-col>                         -->
+                </ion-row>
+            </button>   
+        </ion-item>                     
+    </div>
+    <div *ngSwitchCase="'WP'" style="margin-bottom: 3%">
+        <ion-item class="GridHeader">
+            <ion-row *ngIf="!this.isSmall" text-center>
+                <ion-col col>
+                    <p>{{'Reuter'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Value' |Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Change' |Language}}</p>
+                </ion-col>
+                <!-- <ion-col col>
+                    <p>{{'Percentage' | Language}}</p>
+                </ion-col> -->
+                <ion-col col>
+                    <p>{{'Volume' | Language}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="this.isSmall" text-center>
+                <ion-col col>
+                    <p>{{'Reuter'|Language }}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Value' |Language }}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Change' |Language }}</p>
+                </ion-col>
+                <!-- <ion-col col>
+                    <p>{{'Percentage' | Language }}</p>
+                </ion-col> -->
+                <ion-col col>
+                    <p>{{'Volume' | Language }}</p>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-item *ngFor="let x of WP?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+            <button clear class="full"  (click)="setstockchosen(x[0])">
+                <ion-row text-center>
+                    <ion-col  style="color:#ffa500;font-weight: bold;">{{x[0]}}</ion-col>
+                    <ion-col>{{x[1]}}</ion-col>
+                    
+                    <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[2]}}</ion-col>
+                    <ion-col  *ngIf="x[2]>0 && !this.isSmall"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[4]}}</ion-col>
+                    
+                    <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[2]}}</ion-col>
+                    <ion-col  *ngIf="x[2]<0 && !this.isSmall"  style="color:red; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[4]}}</ion-col>
+                    
+                    <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
+                    <ion-col  *ngIf="x[2]==0 && !this.isSmall">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]==0">{{x[4]}}</ion-col>
+                    <!-- <ion-col  col>
+                            <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
+                            <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
+                    </ion-col>                         -->
+                </ion-row>
+            </button>   
+        </ion-item>                     
+    </div>
+    </div>
+</ion-content>

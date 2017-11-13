@@ -1,0 +1,34 @@
+<ion-header>
+    <cust-nav (pin)="GetCustNavID($event)" [title]="'About Us title' | Language"></cust-nav>
+</ion-header>
+
+<ion-content>
+    
+    <ng-template [ngIf]="!isArabic" text-wrap >
+        <P>Arab Finance Brokerage is an online brokerage company focusing on the serving investors and traders in the Egyptian Stock Market (EGX). </P> 
+        <P>We offer our customers a variety of services and products to meet their needs to trade and follow the EGX:</P>  
+        <ul>
+        <li> Arab Finance website <a href="www.arabfinance.com">www.arabfinance.com</a>  </li>
+        <li> Professional Workstation for Windows (Isharet El-Borsa)  </li>
+        <li> Arab Finance iPhone application  </li>
+        <li> Arab Finance WAP <a href="m.arabfinance.com">m.arabfinance.com</a>  </li>
+        </ul>
+        <P>Our goal at Arab Finance is to provide you with the tools and products to help you make the best possible investment decisions.  </P>
+        <P>Arab Finance is technologically backed and supported by its parent LINKdotNET, one of the most prominent Internet Service and Solution providers <P>in the Middle East and North Africa.  </P>
+        <P>Please visit www.arabfinance.com, send us an-email (info@arabfinance) or call  19717 to open an account.</P>
+    </ng-template>
+    <ng-template [ngIf]="isArabic" text-wrap class="align-right">
+        <p  class="align-right">يتيح موقع أراب فاينانس تغطية شاملة لكافة الأحداث الأقتصادية التي تدور على الساحة المصرية والوطن العريى، وكذلك تغيطة خاصة بالبورصة المصرية وما يدخل في إطارها من أخبار الشركات والأسهم مع توفير خدمات التحليل المالى والفنى للأسهم المدرجة بسوق المال المصرى.</p>
+        <p  class="align-right">وتوفر أراب فاينانس خدماتها الإخبارية باللغة العربية والانجليزية، لضمان وصول الخدمات والمعلومات لأكبر عدد من رواد المواقع الالكترونية علي مستوى العالم.</p>
+        <!-- <p  class="align-right">&nbsp;</p> -->
+        <p  class="align-right">وتعمل أراب فاينانس دائما علي التوسع في تقديم الخدمات والأدوات التي تساعد المستخدمين والمستمثرين في تحقيق أقصى إستفادة من سوق المال،</p>
+        <p  class="align-right">حيث دعمت ذلك بتوفير خدمة التداول اللحظى علي الأنترنت،</p>
+        <p  class="align-right">والتنفيذ الدقيق لعمليات التداول،</p>
+        <p  class="align-right">وتقديم شاشة لحظية خاصة بالأسهم،</p>
+        <p  class="align-right">وأخيراً متابعة أخبار الشركات والأقتصاد المصرى والعالمى من خلال تطبيق للهواتف المحمولة وغيرها</p>
+    </ng-template>
+                                                
+
+</ion-content>
+
+

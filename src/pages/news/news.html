@@ -1,0 +1,81 @@
+<ion-header>
+    <cust-nav (pin)="GetCustNavID($event)" [buttons]="buttons"  [title]="'News' | Language"></cust-nav>
+</ion-header>
+<ion-content>
+    <ion-segment [(ngModel)]="SelectedSegment">
+        <ion-segment-button value="AllNews" (click)="getAll()">{{'ALL' | Language}}</ion-segment-button>
+        <ion-segment-button value="ArabicNews" (click)="getArabic()">{{'Arabic' | Language}}</ion-segment-button>
+        <ion-segment-button value="EnglishNews" (click)="getEnglish()">{{'English' | Language}}</ion-segment-button>
+        <ion-segment-button value="Favorite" (click)="GetFavorite()">{{'Favorite' | Language}}</ion-segment-button>
+    </ion-segment>    
+    <div [ngSwitch]="SelectedSegment">
+
+        <ion-list *ngSwitchCase="'AllNews'" >
+            <ion-item *ngFor="let item of News?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" >
+                 <button clear class="full" text-start  (click)="getdetails(item[0])">
+                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/news/newsimages/{{item[4]}}">
+                    <div class="pThumb" item-text-wrap>
+                        <p text-wrap>{{item[1]}}</p>
+                        <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
+                    </div>
+                </button>  
+            </ion-item>
+            <ion-infinite-scroll (ionInfinite)="More($event)">
+                <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>            
+        </ion-list>
+        <ion-list *ngSwitchCase="'ArabicNews'" >
+            <ion-item  *ngFor="let item of ArabicNews let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                <button clear class="full" text-start  (click)="getdetails(item[0])">
+                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/news/newsimages/{{item[4]}}">
+                    <div class="pThumb" item-text-wrap>
+                        <p text-wrap>{{item[1]}}</p>
+                        <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
+                    </div>
+                </button> 
+            </ion-item>
+            <ion-infinite-scroll (ionInfinite)="More($event)">
+                <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>            
+        </ion-list>
+        <ion-list *ngSwitchCase="'EnglishNews'" >
+            <ion-item  *ngFor="let item of EnglishNews let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                <button clear class="full" text-start  (click)="getdetails(item[0])">
+                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/news/newsimages/{{item[4]}}">
+                    <div class="pThumb" item-text-wrap>
+                        <p text-wrap>{{item[1]}}</p>
+                        <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
+                    </div>
+                </button> 
+            </ion-item>
+            <ion-infinite-scroll (ionInfinite)="More($event)">
+                <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>            
+        </ion-list>
+        <ion-list *ngSwitchCase="'Favorite'" >
+            <ion-item  *ngFor="let item of FavoriteNews let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                <button clear class="full" text-start  (click)="getdetails(item[0])">
+                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/news/newsimages/{{item[4]}}">
+                    <div class="pThumb" item-text-wrap>
+                        <p text-wrap>{{item[1]}}</p>
+                        <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
+                    </div>
+                </button> 
+            </ion-item>
+        </ion-list>        
+    </div>
+    <!-- <ion-refresher (ionRefresh)="More($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher> -->
+
+     
+    <!-- <ion-item *ngIf="SelectedSegment!='Favorite'" (click)="More()">{{'More' | Language}}</ion-item> -->
+</ion-content>
+<!-- <ion-list *ngIf="MoreNews?.result.V">
+
+</ion-list> -->

@@ -1,0 +1,22 @@
+<ion-header>
+    <cust-nav (pin)="GetCustNavID($event)" [buttons]="buttons" [title]="reuter"></cust-nav>
+</ion-header>
+
+<ion-content [dir]="LangDirection" >
+  <ion-item text-wrap  style="color:orange;font-size: 1.2em;font-weight: bold">{{Newsbody?.result.V[1]}}</ion-item>
+  <ion-item  no-lines style="color:orange;font-size: 0.8em">
+      {{Newsbody?.result.V[6]}}
+      <!-- <ion-fab end >
+          <button  *ngIf="pinned" ion-fab (click)="unPinThisItem()" [ngStyle]="{'background-color': pinned? 'orange':'gray'}">
+              <ion-icon name="flag"></ion-icon>
+          </button>
+          <button  *ngIf="!pinned" ion-fab (click)="pinThisItem()" [ngStyle]="{'background-color': pinned? 'orange':'gray'}">
+              <ion-icon name="flag"></ion-icon>
+          </button>
+      </ion-fab> -->
+      <ion-item text-center>
+          <img src="https://www.arabfinance.com/news/newsimages/larg/{{Newsbody?.result.V[7]}}">
+      </ion-item>
+      <ion-item text-wrap text-start id="id" class="NewsDetails-body"></ion-item>
+  </ion-item>
+</ion-content>

@@ -1,0 +1,98 @@
+<ion-header>
+    <cust-nav (pin)="GetCustNavID($event)" [buttons]="buttons" [title]="isArabic? 'قائمة المراقبة': 'WatchList'"></cust-nav>
+</ion-header>
+
+
+<ion-content>
+    <!-- Start Search-->
+    <div class="list" *ngIf="editpressed && displayListDummy &&displayList">
+        <ion-searchbar placeholder="{{'Add_Reuters' | Language}}" (ionInput)="getItems($event)"></ion-searchbar>
+        <ion-list>
+            <ion-item style="display: flex;"  *ngFor="let item of displayList; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+                <ion-label> {{item[0]}} - {{item[1]}}</ion-label>
+                <ion-checkbox [(ngModel)]="map[item[0]]">{{ map[item[0]] }}</ion-checkbox>
+            </ion-item>
+        </ion-list>
+
+    </div>
+    <!-- End Search-->
+    <ion-list no-lines *ngIf="StockDetails && !editpressed">
+        <ion-item  class="GridHeader" *ngIf="!isSmall">
+            <ion-row text-center>
+                <ion-col col>
+                    <p>{{'Reuter'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Value'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Change'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Percentage'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Volume'|Language}}</p>
+                </ion-col>
+                <ion-col col col-1>
+                </ion-col> 
+            </ion-row>
+        </ion-item>
+        <ion-item   class="GridHeader" no-lines *ngIf="isSmall">
+            <ion-row text-center>
+                <ion-col col>
+                    <p>{{'Reuter'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Value'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Change'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Percentage'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Volume'|Language}}</p>
+                </ion-col>
+                <ion-col col-1 >
+                </ion-col> 
+            </ion-row>
+        </ion-item>
+        <ion-item *ngFor="let x of StockDetails?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+                <button text-start clear class="full"  (click)="setstockchosen(x[4])" [hidden]="editpressed">
+                    <ion-row text-start>
+                        <ion-col  style="color:#ffa500;font-weight: bold;">{{x[4]}}</ion-col>
+
+                        <ion-col *ngIf="x[0]>x[6]"  style="color:#32db64; font-weight: bolder;">{{x[0]}}</ion-col>
+                        <ion-col *ngIf="x[0]<x[6]"  style="color: red; font-weight: bolder">{{x[0]}}</ion-col>
+                        <ion-col *ngIf="x[0]==x[6]">{{x[0]}}</ion-col>
+                        
+                        <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[2]}}</ion-col>
+                        <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[1]}}</ion-col>
+                        <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
+                        
+                        <ion-col  *ngIf="x[2]<0"  style="color: red; font-weight: bolder">{{x[2]}}</ion-col>
+                        <ion-col  *ngIf="x[2]<0"  style="color: red; font-weight: bolder">{{x[1]}}</ion-col>
+                        <ion-col  *ngIf="x[2]<0"  style="color: red; font-weight: bolder">{{x[3]}}</ion-col>
+                        
+                        <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
+                        <ion-col  *ngIf="x[2]==0">{{x[1]}}</ion-col>
+                        <ion-col  *ngIf="x[2]==0">{{x[3]}}</ion-col>
+                        <!-- <ion-col  col>
+                                <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
+                                <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
+                        </ion-col>                         -->
+                    </ion-row>
+                    <ion-row>
+                        <ion-col >
+                            {{x[5]}}
+                        </ion-col>
+                    </ion-row>
+                </button>   
+                <button ion-button item-end clear color="danger" icon-only (click)="removeFromWatchlist(i)"><ion-icon name='trash' is-active="false"></ion-icon></button>
+        </ion-item>                     
+    </ion-list>
+
+
+</ion-content>

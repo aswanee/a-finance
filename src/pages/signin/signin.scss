@@ -1,0 +1,93 @@
+
+.cusm-alert-style{
+    .alert-wrapper , .loading-wrapper{
+        background-color: #ffa500!important;
+        border-radius: 30px!important;
+    }
+    .alert-head{
+        padding: 11px 22px 4px !important;
+        text-align: center!important;
+        border-bottom: 1px solid black!important;       
+    }
+    .alert-message , .loading-content {
+        font-size: 18px!important;
+        color: black!important;
+        text-align: center!important;
+        padding: 10px 3px!important;
+    }
+    .alert-button {
+        color: black;
+        border-radius: 23px !important;
+        border: 1px solid #000000 !important;
+        font-weight: 600;
+    }
+}
+page-signin {
+
+    .toggle-light:checked {
+        background-color: #a7cfdf !important;
+    }
+    .toggle-md{
+        width: 40px!important;
+    }
+    .toggle-icon {
+        border: 0.1em solid rgb(143, 141, 141);        
+    }
+    
+    .login-content {
+        background: rgb(0, 0, 0);
+
+        .logo-row {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+
+        .login-box {
+            background: rgb(28, 29, 29);
+            padding: 20px 20px 0px 20px;
+            margin-top: 30px;
+            border: 1px solid orange;
+            border-radius: 30px !important;
+        }
+        .login-box ion-item{
+            background-color: white;
+            margin-bottom: 10px;
+        }
+
+        ion-row {
+            align-items: center;
+            text-align: center;
+        }
+
+        ion-item {
+                border-radius: 30px !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                font-size: 1.05em;
+                margin-bottom: 10px;
+                border: 1px solid #ffffff;
+                border-bottom: 0px !important;
+                box-shadow: none !important;
+                color:orange;
+                
+        }
+
+        .signup-col {
+            margin: 0px 16px 0px 16px;
+            padding-bottom: 20px;
+        }
+        .item-inner {
+            border-bottom-color: #ffffff !important;
+            box-shadow: none !important;
+        }
+        .submit-btn {
+            color: white;
+            border-radius: 30px !important;
+            border: 2px solid #ffffff;
+        }
+        .register-btn {
+            color: #ffffff;
+            font-size: 0.8em;
+        }
+    }
+}

@@ -1,0 +1,85 @@
+page-onlinetrading {
+    .btnMakeOrder{
+        color: orange;
+        border: 1px solid white;
+        margin-bottom: 15px!important;
+        border-radius: 30px!important;
+        background-color: #2f2d2d!important;
+        text-align: center!important;
+        width: 50%;
+        margin-left:25%!important;
+        margin-right: 25%!important;
+    }
+    .search-result ion-row , .search-result ion-col {
+        padding: 0px 5px !important;
+    }
+    .form-div
+    {
+        padding: 5px 5px
+    }
+    .custom-cover{
+		margin: 5px 0px!important;
+    }
+    .custom-cover2{
+		margin: 0px 0px!important;
+    }
+    .innerCard {
+		margin: 10px 0px!important;
+        border-radius: 10px!important;
+        width:100%!important;
+    }    
+    .input-cover {
+        background-color: rgba(82, 82, 82, 0.44);
+        border-radius: 10px;
+        border:1px solid orange; 
+    }
+    .remov-cover .input-cover{
+        background-color: rgba(0, 255, 17, 0);
+        border-radius: 10px;
+        border:1px none rgba(255, 162, 0, 0); 
+
+    }
+    .remov-cover input{
+        border: 1px solid rgba(255, 165, 0, 0.52);
+        background-color: #171616;
+        border-radius: 5px;
+    }
+    .remov-cover ion-item{
+        padding-top:10px; 
+    }
+    .card-header
+    {
+        background-color: rgb(82, 82, 82)!important;
+        padding: 0px 10px 0px 10px!important;
+    }
+    .card
+    {
+        border: 1px solid rgb(82, 82, 82)!important;
+    }
+    .card-content{
+        padding-bottom: 0!important;
+    }
+    .text-input
+    {
+        padding: 0px 10px 0px 10px!important;
+        //border-bottom: 2px solid orange;
+    }
+    .item-inner{
+        border-bottom: 0px none!important;
+    }
+    .label , input{
+        color: orange!important;
+        font-size: 1.4rem!important;
+    }
+    .cashtable{
+        border: 0.05em  solid orange!important;
+        border-radius: 10px !important;
+        margin: 10px 0px!important;
+        padding:0px;
+    }
+    .cashtableheader{
+        border: 1px 1px 0px 1px solid orange!important;
+        border-top-left-radius: 10px !important;
+        border-top-right-radius: 10px !important;
+    }
+}

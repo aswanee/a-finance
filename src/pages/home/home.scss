@@ -1,0 +1,28 @@
+page-home {
+
+}
+
+.button-inner {
+    flex-flow: row;
+    white-space: normal;
+  }
+   .row{
+     padding: 0px;
+  }
+  .label-md{
+     margin: 1px 4px 1px 0;
+  }
+  .full{
+    width: 99%;
+    text-align: left;
+    direction: left;
+    background-color: rgba(255, 255, 255, 0);
+  }
+  .even .checkbox-icon{
+    border: 1px solid orange;
+    border-radius: 10px!important;
+  }
+  .odd .checkbox-icon{
+    background-color: #242424;
+    border: 1px solid orange;
+  }
