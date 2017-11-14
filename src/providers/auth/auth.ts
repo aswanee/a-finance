@@ -83,7 +83,10 @@ export class AuthProvider extends ParentService {
   public getUserInfo() : session {
     return this.CurrentSession;
   }
- 
+  // hasLoggedIn(): Promise<boolean> {
+  //   return true;
+  //   //this.CurrentSession
+  // };
   public logout() {
     return Observable.create(observer => {
       this.CurrentSession = null;

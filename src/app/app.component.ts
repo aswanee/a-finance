@@ -81,55 +81,12 @@ export class MyApp {
           }
           this.platformReady()
         });
+        this.userData.getUserInfo().then((hasLoggedIn) => {
+          this.enableMenu(hasLoggedIn === true);
+        });
+        this.enableMenu(true);
     
-        platform.ready().then(() => {
-          if(window["language"]=="ar")
-          {
-            this.platform.setDir('rtl', true)
-          }
-          // Okay, so the platform is ready and our plugins are available.
-          // Here you can do any higher level native things you might need.
-          platform.registerBackButtonAction(() => {
-            
-             let nav = app.getActiveNavs()[0];
-             let i:number = 0
-             let activeView = nav.getActive(); 
-             var actname = ""; //activeView.name;
-             for(i ; i< app.getActiveNavs.length; i++)
-             {
-                actname += app.getActiveNavs()[i].name + "<br>";
-             }
-             console.log("A-C-T-I-V--V-I-E-W: " + actname + "-----------------------");
-             //if(activeView.name === "FirstPage") 
-             {
-          
-                 if (nav.canGoBack()){ //Can we go back?
-                     nav.pop();
-                 } else {
-                     const alert = this.alertCtrl.create({
-                         title: 'App termination',
-                         message: 'your Active current pageis:<br>  ' + actname + '<br> Do you want to close the app?',
-                         buttons: [{
-                             text: 'Cancel',
-                             role: 'cancel',
-                             handler: () => {
-                                 console.log('Application exit prevented!');
-                             }
-                         },{
-                             text: 'Close App',
-                             handler: () => {
-                                 this.platform.exitApp(); // Close this application
-                             }
-                         }]
-                     });
-                     alert.present();
-                 }
-             }
-         },100);
-  
-        statusBar.styleDefault();
-  
-      });
+        this.listenToLoginEvents();
   }
 
   openPage(page: PageInterface) {
@@ -186,7 +143,53 @@ export class MyApp {
   platformReady() {
     // Call any initial plugins when ready
     this.platform.ready().then(() => {
-      this.splashScreen.hide();
+      if(window["language"]=="ar")
+      {
+        this.platform.setDir('rtl', true)
+      }
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      this.platform.registerBackButtonAction(() => {
+        
+         let nav = this.app.getActiveNavs()[0];
+         let i:number = 0
+         let activeView = nav.getActive(); 
+         var actname = ""; //activeView.name;
+         for(i ; i< this.app.getActiveNavs.length; i++)
+         {
+            actname += this.app.getActiveNavs()[i].name + "<br>";
+         }
+         console.log("A-C-T-I-V--V-I-E-W: " + actname + "-----------------------");
+         //if(activeView.name === "FirstPage") 
+         {
+      
+             if (nav.canGoBack()){ //Can we go back?
+                 nav.pop();
+             } else {
+                 const alert = this.alertCtrl.create({
+                     title: 'App termination',
+                     message: 'your Active current pageis:<br>  ' + actname + '<br> Do you want to close the app?',
+                     buttons: [{
+                         text: 'Cancel',
+                         role: 'cancel',
+                         handler: () => {
+                             console.log('Application exit prevented!');
+                         }
+                     },{
+                         text: 'Close App',
+                         handler: () => {
+                             this.platform.exitApp(); // Close this application
+                         }
+                     }]
+                 });
+                 alert.present();
+             }
+         }
+    },100);
+
+    this.statusBar.styleDefault();
+     
+    this.splashScreen.hide();
     });
   }
 
