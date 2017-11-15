@@ -33,7 +33,7 @@ export let ArabicDictionary: Dictionary =
   Edit: "تعديل",
   Back: "عودة",
   Save: "حفظ",
-  Login: "دخول للحساب",
+  Login: "دخول",
   News: "الأخبار",
   Asks: "عرض",
   Bids: "طلب",

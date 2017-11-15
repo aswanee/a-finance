@@ -5,6 +5,8 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { Storage } from '@ionic/storage';
 import { LocalAuth, AuthProvider } from "../providers/auth/auth";
+import { Subscription } from "rxjs";
+import { session } from "./../interfaces/session.interface";
 
 export interface PageInterface {
   title: string;
@@ -28,28 +30,23 @@ export class MyApp {
     // List of pages that can be navigated to from the left menu
     // the left menu only works after login
     // the login page disables the left menu
-    /*
-      tab1Root = "HomePage";
-  tab2Root = "MarketPage";
-  tab3Root = "NewsPage";
-  tab4Root = "OnlinetradingPage";
-
-    */
+    
+    
     appPages: PageInterface[] = [
-      { title: 'Home', name: 'TabsPage',  component: 'TabsPage', tabComponent: 'HomePage', index: 0, icon: 'pie' },
-      { title: 'Market', name: 'TabsPage', component: 'TabsPage', tabComponent: 'MarketPage', index: 1, icon: 'analytics' },
-      { title: 'News', name: 'TabsPage', component: 'TabsPage', tabComponent: 'NewsPage', index: 2, icon: 'book' },
-      { title: 'About', name: 'TabsPage', component: 'TabsPage', tabComponent: 'AboutPage', index: 3, icon: 'ios-beer-outline' },
+      { title: 'Home',     name: 'TabsPage',     component: 'TabsPage', tabComponent: 'HomePage',         index: 0, icon: 'pie' },
+      { title: 'Market',   name: 'TabsPage',     component: 'TabsPage', tabComponent: 'MarketPage',       index: 1, icon: 'analytics' },
+      { title: 'News',     name: 'TabsPage',     component: 'TabsPage', tabComponent: 'NewsPage',         index: 2, icon: 'book' },
       { title: 'Settings', name: 'SettingsPage', component: 'SettingsPage', icon: 'settings' },
+      { title: 'About',    name: 'AboutPage',    component: 'AboutPage',    icon: 'ios-beer-outline' },
     ];
     loggedInPages: PageInterface[] = [
-      // { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },
-      { title: 'Trading', name: 'TabsPage', component: 'OnlinetradingPage', icon: 'cart' },
-      { title: 'Alert',  name:  'TabsPage',   component: 'AlertPage', icon: 'Alert' },
-      { title: 'Logout', name: 'TabsPage',  component: 'TabsPage', icon: 'log-out', logsOut: true }
+      { title: 'Trading',  name: 'TabsPage', component: 'TabsPage' , tabComponent: 'OnlinetradingPage',index: 3, icon: 'cart' , logsOut: true},
+      { title: 'Alert',    name: 'TabsPage', component: 'AlertPage', icon: 'Alert' },
+      { title: 'Logout',   name: 'TabsPage', component: 'TabsPage' , icon: 'log-out', logsOut: true }
     ];
     loggedOutPages: PageInterface[] = [
-      { title: 'Login', name: 'SigninPage', component: 'SigninPage', icon: 'log-in' },
+      { title: 'Login',    name: 'TabsPage',     component: 'TabsPage', tabComponent: 'SigninPage',       index: 3, icon: 'log-in'}
+      // { title: 'Login', name: 'SigninPage', component: 'SigninPage', icon: 'log-in' },
       // { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
       // { title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
     ];
@@ -57,6 +54,9 @@ export class MyApp {
     rootPage: string ;  
     language: any;
     alert: any;
+    subscription: Subscription;
+    CurrentSession : session;
+
     constructor(
       public events: Events,
       public menu: MenuController,
@@ -68,8 +68,7 @@ export class MyApp {
       public alertCtrl: AlertController,
       public  app: App,
       public storage: Storage,
-      public userData :AuthProvider
-      
+      public userData :AuthProvider,
     ) {
           // Check if the user has already seen the tutorial
         this.storage.get('hasSeenTutorial')
@@ -81,12 +80,48 @@ export class MyApp {
           }
           this.platformReady()
         });
-        this.userData.getUserInfo().then((hasLoggedIn) => {
-          this.enableMenu(hasLoggedIn === true);
+
+        // decide which menu items should be hidden by current login status stored in local storage
+        this.subscription = this.userData.getMessage().subscribe(message => { 
+          this.CurrentSession = message 
+          if(this.CurrentSession && this.CurrentSession.result !=null && this.CurrentSession.result.GeneralInfo &&this.CurrentSession.result.GeneralInfo.UserID >0)
+          {
+              this.enableMenu(false);
+              if (this.nav.getActiveChildNavs().length ) {
+                var index = this.nav.getActiveChildNavs()[0].getSelected();
+                if(index==3)
+                {
+                  this.openPage(this.appPages[0])
+                }
+              } else {
+                // Set the root of the nav with params if it's a tab index
+                this.nav.setRoot('TabsPage', 0).catch((err: any) => {
+                  console.log(`Didn't set nav root: ${err}`);
+                });
+              }
+          }
+          else
+          {
+              this.enableMenu(true);
+          }
+          // if(this.CurrentSession && this.CurrentSession.result !=null && this.CurrentSession.result.GeneralInfo && this.CurrentSession.result.GeneralInfo.IsTrader && this.CurrentSession.result.GeneralInfo.UserID >0)
+          // {
+          //     this.enableMenuTrader(true);
+          // }
+          // else
+          // {
+          //     this.enableMenuTrader(false);
+          // }
         });
+
+
         this.enableMenu(true);
     
         this.listenToLoginEvents();
+
+
+
+    
   }
 
   openPage(page: PageInterface) {
@@ -110,10 +145,14 @@ export class MyApp {
         console.log(`Didn't set nav root: ${err}`);
       });
     }
-
+    
     if (page.logsOut === true) {
       // Give the menu time to close before changing to logged out
-      this.userData.logout();
+      //this.userData.logout();
+        this.userData.logout().subscribe(succ => {
+        //this.menuToast("out");
+        this.enableMenu(false);
+      });
     }
   }
 
@@ -140,56 +179,60 @@ export class MyApp {
     this.menu.enable(!loggedIn, 'loggedOutMenu');
   }
 
+  enableMenuTrader(loggedIn: boolean) {
+    // this.menu.enable(loggedIn, 'loggedInMenu');
+    // this.menu.enable(!loggedIn, 'loggedOutMenu');
+  }
+
   platformReady() {
     // Call any initial plugins when ready
-    this.platform.ready().then(() => {
-      if(window["language"]=="ar")
-      {
-        this.platform.setDir('rtl', true)
-      }
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.platform.registerBackButtonAction(() => {
+      this.platform.ready().then(() => {
+        if(window["language"]=="ar")
+        {
+          this.platform.setDir('rtl', true)
+        }
+        // Okay, so the platform is ready and our plugins are available.
+        // Here you can do any higher level native things you might need.
+        this.platform.registerBackButtonAction(() => {
+          
+           let nav = this.app.getActiveNavs()[0];
+           let i:number = 0
+           let activeView = nav.getActive(); 
+           var actname = ""; //activeView.name;
+           for(i ; i< this.app.getActiveNavs.length; i++)
+           {
+              actname += this.app.getActiveNavs()[i].name + "<br>";
+           }
+           console.log("A-C-T-I-V--V-I-E-W: " + actname + "-----------------------");
+           //if(activeView.name === "FirstPage") 
+           {
         
-         let nav = this.app.getActiveNavs()[0];
-         let i:number = 0
-         let activeView = nav.getActive(); 
-         var actname = ""; //activeView.name;
-         for(i ; i< this.app.getActiveNavs.length; i++)
-         {
-            actname += this.app.getActiveNavs()[i].name + "<br>";
-         }
-         console.log("A-C-T-I-V--V-I-E-W: " + actname + "-----------------------");
-         //if(activeView.name === "FirstPage") 
-         {
-      
-             if (nav.canGoBack()){ //Can we go back?
-                 nav.pop();
-             } else {
-                 const alert = this.alertCtrl.create({
-                     title: 'App termination',
-                     message: 'your Active current pageis:<br>  ' + actname + '<br> Do you want to close the app?',
-                     buttons: [{
-                         text: 'Cancel',
-                         role: 'cancel',
-                         handler: () => {
-                             console.log('Application exit prevented!');
-                         }
-                     },{
-                         text: 'Close App',
-                         handler: () => {
-                             this.platform.exitApp(); // Close this application
-                         }
-                     }]
-                 });
-                 alert.present();
-             }
-         }
-    },100);
-
-    this.statusBar.styleDefault();
-     
-    this.splashScreen.hide();
+               if (nav.canGoBack()){ //Can we go back?
+                   nav.pop();
+               } else {
+                   const alert = this.alertCtrl.create({
+                       title: 'App termination',
+                       message: 'your Active current pageis:<br>  ' + actname + '<br> Do you want to close the app?',
+                       buttons: [{
+                           text: 'Cancel',
+                           role: 'cancel',
+                           handler: () => {
+                               console.log('Application exit prevented!');
+                           }
+                       },{
+                           text: 'Close App',
+                           handler: () => {
+                               this.platform.exitApp(); // Close this application
+                           }
+                       }]
+                   });
+                   alert.present();
+               }
+           }
+       },100);
+  
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
   }
 

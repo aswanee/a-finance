@@ -2,6 +2,7 @@
     <ion-tab [root]="tab1Root" tabTitle="{{'WatchList'|Language}}" tabIcon="pie"> </ion-tab>
     <ion-tab [root]="tab2Root" tabTitle="{{'Market'|Language}}"    tabIcon="analytics"></ion-tab>
     <ion-tab [root]="tab3Root" tabTitle="{{'News'|Language}}"      tabIcon="book"></ion-tab>
-    <ion-tab [root]="tab4Root" tabTitle="{{'About Us title'|Language}}"    tabIcon="cart"></ion-tab>
+    <ion-tab [root]="tab4Root" tabTitle="{{DynamicTitle|Language}}"    [tabIcon]="TabIcon"></ion-tab>
+    <!-- <ion-tab [root]="tab5Root" *ngIf="!isLoggedIn" tabTitle="{{'About Us title'|Language}}"    tabIcon="cart"></ion-tab> -->
 </ion-tabs>
   

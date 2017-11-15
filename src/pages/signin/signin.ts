@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Platform,NavController, NavParams ,AlertController, LoadingController, Loading} from 'ionic-angular';
 import { AuthProvider ,LocalAuth} from '../../providers/auth/auth';
-import { User } from '../../interfaces/session.interface';
+import { User, session } from '../../interfaces/session.interface';
 //import { ViewChild, OnInit } from "@angular/core";
 import { IonicPage, } from 'ionic-angular';
+import { Subscription } from 'rxjs';
 
 @IonicPage()
 @Component({
@@ -39,8 +40,11 @@ export class SigninPage {
   registerCredentials :User;
   //ParentPage :string;
   saveme:any = false;
+  subscription: Subscription;
+  CurrentSession : session;
+
   constructor(private navCtrl: NavController, 
-    private auth: AuthProvider, 
+    private userData: AuthProvider, 
     private alertCtrl: AlertController, 
     private loadingCtrl: LoadingController,
     public navParams: NavParams,
@@ -53,11 +57,11 @@ export class SigninPage {
   ionViewDidEnter() {
     console.log("ionViewDidEnter");
     
-    if(this.auth.StorageAuth && this.auth.StorageAuth.save == true)
+    if(this.userData.StorageAuth && this.userData.StorageAuth.save == true)
     {
-      this.registerCredentials.username = this.auth.StorageAuth.username;
-      this.registerCredentials.password = this.auth.StorageAuth.password;
-      this.saveme = this.auth.StorageAuth.save;
+      this.registerCredentials.username = this.userData.StorageAuth.username;
+      this.registerCredentials.password = this.userData.StorageAuth.password;
+      this.saveme = this.userData.StorageAuth.save;
     }
     else
     {
@@ -65,21 +69,9 @@ export class SigninPage {
       this.registerCredentials.password = "";
       this.saveme = false;
     }
-
-    //
-  //   this.registerBackButton = this.platform.registerBackButtonAction(() => {
-  //     console.log("YOU WILL GO BACK");
-  //     if (this.navCtrl != undefined && this.registerBackButton!=undefined && this.navCtrl.canGoBack())
-  //           this.navCtrl.pop();
-  //  },this.perurity);
-  //  this.perurity-+2;
   }
 
   ionViewWillLeave() {
-  //   this.registerBackButton = this.platform.registerBackButtonAction(() => {
-  //     console.log("YOU WILL GO BACK");
-
-  //  },this.perurity);
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SigninPage');
@@ -88,39 +80,40 @@ export class SigninPage {
   public createAccount() {
     this.navCtrl.push('RegisterPage');
   }
+
   loacal_auth:LocalAuth ={ save:false, username:"", password:"" } ;
 
   public login() {
-    
-    
-    this.showLoading()
-    this.auth.login(this.registerCredentials).subscribe(allowed => {
-      if (allowed) {        
-        //var returnPage =this.navParams.get("ParentPage");
-        //if(!returnPage)
-        //returnPage = "OnlinetradingPage";
-        this.navCtrl.setRoot("OnlinetradingPage");
-        if(this.saveme)
+    if (
+      this.registerCredentials.username === null || 
+      this.registerCredentials.username === "" || 
+      this.registerCredentials.password === null || 
+      this.registerCredentials.password === ""
+    ) {
+      this.showError("Please insert credentials");
+    } 
+    else 
+    {
+      this.showLoading();
+      
+      this.subscription = this.userData.getMessage().subscribe(message => { 
+        this.CurrentSession = message.CurrentSession; 
+        if(this.CurrentSession && 
+           this.CurrentSession.result != undefined && 
+           this.CurrentSession.result != null && 
+           this.CurrentSession.result.GeneralInfo && 
+           this.CurrentSession.result.GeneralInfo.UserID > 0 )
         {
-          this.auth.StorageAuth.username = this.registerCredentials.username;
-          this.auth.StorageAuth.password = this.registerCredentials.password;
-          this.auth.StorageAuth.save = true;
+  
+          this.navCtrl.setRoot("OnlinetradingPage");
         }
         else
         {
-          this.auth.StorageAuth.username = "";
-          this.auth.StorageAuth.password = "";
-          this.auth.StorageAuth.save = false;
+          this.showError("Access Denied");   
         }
-        this.auth.setStorageAuth().subscribe(data=>{});
-        //this.navCtrl.push(OnlinetradingPage);
-      } else {
-        this.showError("Access Denied");   
-      }
-    },
-      error => {
-        this.showError(error);
       });
+      this.userData.login(this.registerCredentials,this.saveme)
+    }
   }
 
   

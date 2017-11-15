@@ -5,6 +5,7 @@ import { Observable } from "rxjs/Observable";
 import { session ,User} from "../../interfaces/session.interface";
 import { Storage } from "@ionic/storage";
 import 'rxjs/add/operator/map';
+import { Subject } from 'rxjs';
 
 export interface LocalAuth { save:boolean, username:string, password:string } ;
 
@@ -18,11 +19,10 @@ export class AuthProvider extends ParentService {
     console.log('Hello AuthProvider Provider');
   }
 
-  public login(credentials :User):Observable<session> {
-    if (credentials.username === null || credentials.password === null) {
-      return Observable.throw("Please insert credentials");
-    } else {
-      return Observable.create(observer => {
+  public login(credentials :User,saveme: boolean){
+    // if (credentials.username === null || credentials.password === null) {
+    //   return Observable.throw("Please insert credentials");
+    // } else {
         // At this point make a request to your backend to make a real check!
 
         this.getsecurelink();
@@ -37,60 +37,55 @@ export class AuthProvider extends ParentService {
         })
         .map(x => {
           let Session = <session>(x.json());
+          this.StorageAuth ={save: false , username: "" , password: "" };
+          this.StorageAuth.save = saveme;
           if(!Session ||!Session.result || Session.result.GeneralInfo.UserID<=0)
           {
             console.log(Session);
             this.CurrentSession =   { Status : "", result: null };
-            observer.next(false);
-            //throw("Response With Not Session data");
+            this.StorageAuth.username = "";
+            this.StorageAuth.password = "";
+
+            this.storage.set("LocalAuth", this.StorageAuth);
+            //observer.next(false);
           }
           else
           {
             this.CurrentSession = Session;
-            this.CurrentSession;
-            this.storage.set("session", this.CurrentSession);
+            this.StorageAuth.username = credentials.username;
+            this.StorageAuth.password = credentials.password;
             
+            this.storage.set("LocalAuth", this.StorageAuth);
+            this.storage.set("session", this.CurrentSession);
             this.storage.set("GeneralInfo", this.CurrentSession.result.GeneralInfo);
             this.storage.set("Custodians", this.CurrentSession.result.UserCustodians);
             this.storage.set("Accounts", this.CurrentSession.result.UserAccounts);
-            //this.storage.set("Favorite", this.CurrentSession.result.UserFavorite);
             this.storage.set("SelectedBIMS", this.CurrentSession.result.GeneralInfo.BIMSIAccountNumber);
-            observer.next(true)
+            //observer.next(true)
           }
+          this.subject.next({ CurrentSession: this.CurrentSession });
         })
          .subscribe(
           data =>{
             console.log(data)
           },
-        //   // err=>{
-        //   //   console.log(err.json())
-        //   //   observer.next(false);
-        //   // },
+
           ()=>{
             console.log("COMPLET :)")
-            observer.complete();
           }
          )
-        
-
-        // //this.currentUser = new User('Simon', 'saimon@devdactic.com');
-        // observer.next(access);
-        // observer.complete();
-      });
-    }
+    //}
   }
 
   public getUserInfo() : session {
     return this.CurrentSession;
   }
-  // hasLoggedIn(): Promise<boolean> {
-  //   return true;
-  //   //this.CurrentSession
-  // };
+ 
   public logout() {
     return Observable.create(observer => {
       this.CurrentSession = null;
       observer.next(true);
+      this.subject.next({ CurrentSession: this.CurrentSession });
       observer.complete();
     });
   }
@@ -112,9 +107,12 @@ export class AuthProvider extends ParentService {
     
   }
 
-  public setStorageAuth() :any  {
-      return this.storage.set("LocalAuth",this.StorageAuth).then(LocalAuth => {
-        return this.StorageAuth;
-      }).catch((t: Response) => t.json());
+  private subject = new Subject<any>();
+  
+  getMessage(): Observable<any> {
+    return this.subject.asObservable();
   }
+
+
+
 }
