@@ -21,6 +21,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { NewsPageModule } from "../pages/news/news.module";
 import { TabsPageModule } from "../pages/tabs/tabs.module";
 import { OnlinetradingPageModule } from "../pages/onlinetrading/onlinetrading.module";
+import { TabsloggedinPageModule } from "../pages/tabsloggedin/tabsloggedin.module";
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { OnlinetradingPageModule } from "../pages/onlinetrading/onlinetrading.mo
     BrowserModule,
     HttpModule,
     TabsPageModule,
+    TabsloggedinPageModule,
     NewsPageModule,
     OnlinetradingPageModule,
   ],

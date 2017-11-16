@@ -1,12 +1,15 @@
-  .menu-root .menu-header{
-    background-color: rgba(255, 172, 20, 0.42) !important;
-    margin-bottom: 1px!important;
-    color:orange;
-  }
-  .menu-root .list-md {
+.cust-menu-root .list-md {
        margin: -1px 0 6px!important;
-
   }
-.menu-root .item{
+  .cust-menu-list button,.cust-menu-list ion-list-header{
+    padding-left:  20px!important;
+    padding-Right:  20px!important;
+  }
+.cust-menu-root .item{
   border-bottom: 0.005em  solid rgb(99, 81, 50) !important;
+}
+.cust-menu-root .cust-menu-header {
+  background-color: rgb(124, 88, 23) !important;
+  margin-bottom: 1px !important;
+  color: orange;
 }

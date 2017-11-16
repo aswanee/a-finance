@@ -18,15 +18,18 @@ export class TutorialPage {
   showSkip = true;
   
     @ViewChild('slides') slides: Slides;
-  
+    rootPage:string ="TabsPage";
     constructor(
       public navCtrl: NavController,
       public menu: MenuController,
-      public storage: Storage
-    ) { }
+      public storage: Storage,
+      navParams: NavParams
+    ) {
+      this.rootPage = navParams.data.rootPage || "TabsPage";
+     }
   
     startApp() {
-      this.navCtrl.push('TabsPage').then(() => {
+      this.navCtrl.push(this.rootPage).then(() => {
         this.storage.set('hasSeenTutorial', 'true');
       })
     }

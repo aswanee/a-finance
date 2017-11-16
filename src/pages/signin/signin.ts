@@ -72,6 +72,7 @@ export class SigninPage {
   }
 
   ionViewWillLeave() {
+    this.loading.dismiss();
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SigninPage');
@@ -94,24 +95,26 @@ export class SigninPage {
     } 
     else 
     {
-      this.showLoading();
+      //this.showLoading();
       
-      this.subscription = this.userData.getMessage().subscribe(message => { 
-        this.CurrentSession = message.CurrentSession; 
-        if(this.CurrentSession && 
-           this.CurrentSession.result != undefined && 
-           this.CurrentSession.result != null && 
-           this.CurrentSession.result.GeneralInfo && 
-           this.CurrentSession.result.GeneralInfo.UserID > 0 )
-        {
-  
-          this.navCtrl.setRoot("OnlinetradingPage");
-        }
-        else
-        {
-          this.showError("Access Denied");   
-        }
-      });
+      // this.subscription = this.userData.getMessage().subscribe(message => { 
+      //   this.CurrentSession = message.CurrentSession; 
+      //   if(this.CurrentSession && 
+      //      this.CurrentSession.result != undefined && 
+      //      this.CurrentSession.result != null && 
+      //      this.CurrentSession.result.GeneralInfo && 
+      //      this.CurrentSession.result.GeneralInfo.UserID > 0 )
+      //   {
+      //     //If trader go to On line Trading Page
+      //     //otherwise og to Home Page 
+      //     //Now we dont need to use (this.navCtrl.setRoot) here  
+      //     //where the app component will manage the page we need to redirect to 
+      //   }
+      //   else
+      //   {
+      //     this.showError("Access Denied");   
+      //   }
+      // });
       this.userData.login(this.registerCredentials,this.saveme)
     }
   }

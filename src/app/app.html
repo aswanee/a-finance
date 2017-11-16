@@ -1,5 +1,4 @@
-<ion-split-pane side="right" class="menu-root">
-    
+<ion-split-pane side="left" class="cust-menu-root">
       <!-- logged out menu -->
       <ion-menu id="loggedOutMenu" [content]="content">
         <ion-header >
@@ -8,26 +7,26 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="outer-content">
-          <ion-list>
-            <ion-list-header class="menu-header">
+          <ion-list class="cust-menu-list">
+            <ion-list-header class="cust-menu-header">
               Navigate
             </ion-list-header>
-              <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
+              <button ion-item menuClose *ngFor="let p of app_Pages" (click)="openPage(p)">
                 <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
                 {{p.title}}
               </button>
           </ion-list>
-          <ion-list>
-            <ion-list-header class="menu-header">
+          <ion-list class="cust-menu-list">
+            <ion-list-header class="cust-menu-header">
               Account
             </ion-list-header>
-            <button ion-item menuClose *ngFor="let p of loggedOutPages" (click)="openPage(p)">
+            <button ion-item menuClose *ngFor="let p of loggedOut_Pages" (click)="openPage(p)">
               <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
               {{p.title}}
             </button>
           </ion-list>
-          <ion-list>
-            <ion-list-header class="menu-header">
+          <ion-list class="cust-menu-list">
+            <ion-list-header class="cust-menu-header">
               Tutorial
             </ion-list-header>
             <button ion-item menuClose (click)="openTutorial()">
@@ -46,17 +45,17 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="outer-content">
-          <ion-list>
-            <ion-list-header>
+          <ion-list class="cust-menu-list">
+            <ion-list-header class="cust-menu-header">
               Navigate
             </ion-list-header>
-            <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
+            <button ion-item menuClose *ngFor="let p of app_Pages" (click)="openPage(p)">
               <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
               {{p.title}}
             </button>
           </ion-list>
-          <ion-list>
-            <ion-list-header>
+          <ion-list class="cust-menu-list">
+            <ion-list-header class="cust-menu-header">
               Account
             </ion-list-header>
             <button ion-item menuClose *ngFor="let p of loggedInPages" (click)="openPage(p)">
@@ -64,8 +63,8 @@
               {{p.title}}
             </button>
           </ion-list>
-          <ion-list>
-            <ion-list-header>
+          <ion-list class="cust-menu-list">
+            <ion-list-header class="cust-menu-header">
               Tutorial
             </ion-list-header>
             <button ion-item menuClose (click)="openTutorial()">

@@ -30,28 +30,30 @@ export class MyApp {
     // List of pages that can be navigated to from the left menu
     // the left menu only works after login
     // the login page disables the left menu
+    rootPage: string ="TabsPage"; 
     
-    
-    appPages: PageInterface[] = [
-      { title: 'Home',     name: 'TabsPage',     component: 'TabsPage', tabComponent: 'HomePage',         index: 0, icon: 'pie' },
-      { title: 'Market',   name: 'TabsPage',     component: 'TabsPage', tabComponent: 'MarketPage',       index: 1, icon: 'analytics' },
-      { title: 'News',     name: 'TabsPage',     component: 'TabsPage', tabComponent: 'NewsPage',         index: 2, icon: 'book' },
+    app_Pages: PageInterface[] = [
+      { title: 'Home',     name: this.rootPage,     component: this.rootPage, tabComponent: 'HomePage',       index: 0, icon: 'pie' },
+      { title: 'Market',   name: this.rootPage,     component: this.rootPage, tabComponent: 'MarketPage',     index: 1, icon: 'analytics' },
+      { title: 'News',     name: this.rootPage,     component: this.rootPage, tabComponent: 'NewsPage',       index: 2, icon: 'book' },
       { title: 'Settings', name: 'SettingsPage', component: 'SettingsPage', icon: 'settings' },
       { title: 'About',    name: 'AboutPage',    component: 'AboutPage',    icon: 'ios-beer-outline' },
     ];
-    loggedInPages: PageInterface[] = [
-      { title: 'Trading',  name: 'TabsPage', component: 'TabsPage' , tabComponent: 'OnlinetradingPage',index: 3, icon: 'cart' , logsOut: true},
-      { title: 'Alert',    name: 'TabsPage', component: 'AlertPage', icon: 'Alert' },
+    Trader_loggedIn_Pages: PageInterface[] = [
+      { title: 'Trading',  name: 'TabsloggedinPage', component: 'TabsloggedinPage' , tabComponent: 'OnlinetradingPage', index: 3, icon: 'cart' },
+      { title: 'Alert',    name: 'AlertPage', component: 'AlertPage', icon: 'notifications'},
+      { title: 'Logout',   name: this.rootPage, component: this.rootPage , icon: 'log-out', logsOut: true }
+    ];
+    NonTrader_loggedIn_Pages: PageInterface[] = [
+      { title: 'Alert',    name: 'TabsloggedinPage', component: 'TabsloggedinPage' ,  tabComponent: 'AlertPage',        index: 3, icon: 'notifications'},
       { title: 'Logout',   name: 'TabsPage', component: 'TabsPage' , icon: 'log-out', logsOut: true }
     ];
-    loggedOutPages: PageInterface[] = [
-      { title: 'Login',    name: 'TabsPage',     component: 'TabsPage', tabComponent: 'SigninPage',       index: 3, icon: 'log-in'}
-      // { title: 'Login', name: 'SigninPage', component: 'SigninPage', icon: 'log-in' },
-      // { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
-      // { title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
+    loggedOut_Pages: PageInterface[] = [
+      { title: 'Login',    name: 'TabsPage', component: 'TabsPage' ,   tabComponent: 'SigninPage',      index: 3, icon: 'log-in'}
     ];
+    
+    loggedInPages: PageInterface[];
 
-    rootPage: string ;  
     language: any;
     alert: any;
     subscription: Subscription;
@@ -73,55 +75,54 @@ export class MyApp {
           // Check if the user has already seen the tutorial
         this.storage.get('hasSeenTutorial')
         .then((hasSeenTutorial) => {
-          if (hasSeenTutorial) {
-            this.rootPage = 'TabsPage';
-          } else {
+          if (!hasSeenTutorial) {
             this.rootPage = 'TutorialPage';
           }
           this.platformReady()
         });
 
         // decide which menu items should be hidden by current login status stored in local storage
-        this.subscription = this.userData.getMessage().subscribe(message => { 
-          this.CurrentSession = message 
-          if(this.CurrentSession && this.CurrentSession.result !=null && this.CurrentSession.result.GeneralInfo &&this.CurrentSession.result.GeneralInfo.UserID >0)
+        this.subscription = this.userData.getMessage().subscribe(message => 
+        { 
+          this.CurrentSession = message.CurrentSession; 
+          if(this.CurrentSession && 
+            this.CurrentSession.result !=null && 
+            this.CurrentSession.result.GeneralInfo &&
+            this.CurrentSession.result.GeneralInfo.UserID >0)
           {
-              this.enableMenu(false);
-              if (this.nav.getActiveChildNavs().length ) {
-                var index = this.nav.getActiveChildNavs()[0].getSelected();
-                if(index==3)
-                {
-                  this.openPage(this.appPages[0])
-                }
-              } else {
-                // Set the root of the nav with params if it's a tab index
-                this.nav.setRoot('TabsPage', 0).catch((err: any) => {
-                  console.log(`Didn't set nav root: ${err}`);
-                });
+              if(this.CurrentSession.result.GeneralInfo.IsTrader)
+              {
+                this.enable_Trader_loggedIn_Menu();
+                this.rootPage = 'TabsloggedinPage';
+              }
+              else
+              {
+                this.enable_NonTrader_loggedIn_Menu();
+                this.rootPage = 'TabsloggedinPage';
               }
           }
           else
           {
-              this.enableMenu(true);
+              this.disable_loggedIn_Menu();
           }
-          // if(this.CurrentSession && this.CurrentSession.result !=null && this.CurrentSession.result.GeneralInfo && this.CurrentSession.result.GeneralInfo.IsTrader && this.CurrentSession.result.GeneralInfo.UserID >0)
-          // {
-          //     this.enableMenuTrader(true);
-          // }
-          // else
-          // {
-          //     this.enableMenuTrader(false);
-          // }
         });
 
+        this.disable_loggedIn_Menu();
+        //this.listenToLoginEvents();
+  }
 
-        this.enableMenu(true);
-    
-        this.listenToLoginEvents();
+  showError(text) {
+    this.nav.setRoot('TabsPage', 0).catch((err: any) => {
+      let alert = this.alertCtrl.create({
+        title: 'Fail',
+        message: text,
+        cssClass:'cusm-alert-style',
+        //subTitle: text,
+        buttons: ['OK']
+      });
+      alert.present();
+    });
 
-
-
-    
   }
 
   openPage(page: PageInterface) {
@@ -137,6 +138,10 @@ export class MyApp {
     // If we are already on tabs just change the selected tab
     // don't setRoot again, this maintains the history stack of the
     // tabs even if changing them from the menu
+    console.log(`page.name: ${page.name}`);
+    console.log(`Didn't set nav root: ${page.index}`);
+    console.log(`Didn't set nav root: ${this.nav.getActiveChildNavs().length}`);
+    
     if (this.nav.getActiveChildNavs().length && page.index != undefined) {
       this.nav.getActiveChildNavs()[0].select(page.index);
     } else {
@@ -151,46 +156,55 @@ export class MyApp {
       //this.userData.logout();
         this.userData.logout().subscribe(succ => {
         //this.menuToast("out");
-        this.enableMenu(false);
+        this.disable_loggedIn_Menu();
+        this.rootPage = 'TabsPage';
       });
     }
   }
 
   openTutorial() {
-    this.nav.setRoot('TutorialPage');
+    this.nav.setRoot('TutorialPage',{rootPage :this.rootPage});
   }
 
-  listenToLoginEvents() {
-    this.events.subscribe('user:login', () => {
-      this.enableMenu(true);
-    });
+  enable_Trader_loggedIn_Menu() {
+    this.loggedInPages = this.Trader_loggedIn_Pages;
 
-    this.events.subscribe('user:signup', () => {
-      this.enableMenu(true);
-    });
-
-    this.events.subscribe('user:logout', () => {
-      this.enableMenu(false);
-    });
+    this.menu.enable(true, 'loggedInMenu');
+    this.menu.enable(false, 'loggedOutMenu');
   }
 
-  enableMenu(loggedIn: boolean) {
-    this.menu.enable(loggedIn, 'loggedInMenu');
-    this.menu.enable(!loggedIn, 'loggedOutMenu');
+  enable_NonTrader_loggedIn_Menu() {
+    this.loggedInPages = this.NonTrader_loggedIn_Pages;
+
+    this.menu.enable(true, 'loggedInMenu');
+    this.menu.enable(false, 'loggedOutMenu');
   }
 
-  enableMenuTrader(loggedIn: boolean) {
-    // this.menu.enable(loggedIn, 'loggedInMenu');
-    // this.menu.enable(!loggedIn, 'loggedOutMenu');
-  }
+  disable_loggedIn_Menu() {
+    this.loggedInPages = [];
 
+    this.menu.enable(true, 'loggedOutMenu');
+    this.menu.enable(false, 'loggedInMenu');
+  }
+  getmenudir():string
+  {
+    return this.slidDir;
+  }
+  slidDir:string = "Right";
   platformReady() {
     // Call any initial plugins when ready
       this.platform.ready().then(() => {
-        if(window["language"]=="ar")
+        if(window["language"])
         {
-          this.platform.setDir('rtl', true)
+          this.platform.setDir('rtl', window["language"]=="ar")
+          this.slidDir = window["language"]=="ar"? "Right" : "Left";
         }
+        else
+        {
+          this.platform.setDir('rtl', false)
+          this.slidDir = "Right";
+        }
+        
         // Okay, so the platform is ready and our plugins are available.
         // Here you can do any higher level native things you might need.
         this.platform.registerBackButtonAction(() => {
@@ -252,4 +266,20 @@ export class MyApp {
     }
     return;
   }
+
+  
+  // listenToLoginEvents() {
+  //   this.events.subscribe('user:login', () => {
+  //     this.enableMenu(true);
+  //   });
+
+  //   this.events.subscribe('user:signup', () => {
+  //     this.enableMenu(true);
+  //   });
+
+  //   this.events.subscribe('user:logout', () => {
+  //     this.enableMenu(false);
+  //   });
+  // }
+
 }
