@@ -46,7 +46,17 @@ export class CustNavComponent implements OnDestroy {
   }
 	ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
-    this.subscription.unsubscribe();
+    if(this.subscription) 
+    {
+      try{
+        this.subscription.unsubscribe();
+      }
+      catch(err){
+        console.log("Error@ngOnDestroy@Cust-nav");
+        console.log(err);
+      }
+         
+    }
   }
   counter:number = 0
   getstatus()
@@ -58,19 +68,6 @@ export class CustNavComponent implements OnDestroy {
          {
              this.subscription = this.marketservice.getMessage().subscribe(message => { 
               this.MarketStatus = message 
-        //      if(this.counter<5000)
-        //      {
-        //       this.MarketStatus.Status = this.marketservice.MarketStatus.Status;
-        //       this.MarketStatus.Datetime = new Date(this.MarketStatus.Datetime.setMilliseconds(1000));
-        //       this.MarketStatus.Time =  new Date(this.MarketStatus.Datetime).toLocaleTimeString();
-        //       this.counter += 1000;
-        //       //console.log("Calc Time IS------->" + this.MarketStatus.Time)
-        //     }
-        //     else
-        //     {
-        //       this.MarketStatus = this.marketservice.MarketStatus;
-        //       this.counter = 0;
-        //     }
             });
          }
       }

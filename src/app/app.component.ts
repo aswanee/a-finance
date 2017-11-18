@@ -139,8 +139,8 @@ export class MyApp {
     // don't setRoot again, this maintains the history stack of the
     // tabs even if changing them from the menu
     console.log(`page.name: ${page.name}`);
-    console.log(`Didn't set nav root: ${page.index}`);
-    console.log(`Didn't set nav root: ${this.nav.getActiveChildNavs().length}`);
+    console.log(`page.index: ${page.index}`);
+    console.log(`Nav-GetActiveChildNavs-length: ${this.nav.getActiveChildNavs().length}`);
     
     if (this.nav.getActiveChildNavs().length && page.index != undefined) {
       this.nav.getActiveChildNavs()[0].select(page.index);

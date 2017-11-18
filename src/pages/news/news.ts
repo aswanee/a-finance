@@ -242,9 +242,18 @@ export class NewsPage implements OnInit,OnDestroy {
   
     ngOnDestroy() {
       // unsubscribe to ensure no memory leaks
-      this.subscription.unsubscribe();
+      //this.subscription.unsubscribe();
+      if(this.subscription) 
+      {
+        try{
+          this.subscription.unsubscribe();
+        }
+        catch(err){
+          console.log("Error@ngOnDestroy@news");
+          console.log(err);
+        }
+      }
     }
-  
     GetFavorite()  {
       
     }
@@ -262,7 +271,10 @@ export class NewsPage implements OnInit,OnDestroy {
         {
           if(this.subscription) 
           {
-              this.subscription = this.Favo.getMessage().subscribe(message => { this.FavoriteNews = message });
+              this.subscription = this.Favo.getMessage()
+              .subscribe(message => {
+                 this.FavoriteNews = message ;
+              });
           }
           
           this.Favo.GetFavoriteNews(UserID.toString())

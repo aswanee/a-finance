@@ -7,8 +7,8 @@
                 <span *ngIf="Session.result.UserAccounts[0]" > {{Session.result.UserAccounts[0]}}</span>
            </div> 
            <div class="status">
-                <label style="color:red!important;border: 1px solid red!important;" calss="status closed" *ngIf="marketservice.MarketStatus.Status=='Close'" >Closed</label>
-                <label style="color:green!important;border: 1px solid green!important;"  calss="status open" *ngIf="marketservice.MarketStatus.Status!='Close'">Open</label>
+                <label style="color:red!important;border: 1px solid red!important;" calss="status closed" *ngIf="marketservice.MarketStatus.Status=='Close'" >Closed-{{marketservice.MarketStatus.Time}}</label>
+                <label style="color:green!important;border: 1px solid green!important;"  calss="status open" *ngIf="marketservice.MarketStatus.Status!='Close'">Open-{{marketservice.MarketStatus.Time}}</label>
                 <span style="color:rgb(255, 255, 255);font-size: 12px"></span>
                 <span class="title">
                     {{title}}

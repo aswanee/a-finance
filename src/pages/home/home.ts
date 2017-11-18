@@ -21,8 +21,7 @@ import { Badge } from '@ionic-native/badge';
   templateUrl: 'home.html',
 })
 export class HomePage {
-  //MarketStatus :{Status:string, Time:string}= {Status:"OK", Time:"xxxx"} ;
-  MarketStatus :{Status:string, Time:string, Datetime : Date} = {Status:"CLOSE", Time:"00000",Datetime: new Date()};
+  //MarketStatus :{Status:string, Time:string, Datetime : Date} = {Status:"CLOSE", Time:"00000",Datetime: new Date()};
   
   ButtonName :string ;
     
@@ -209,13 +208,14 @@ export class HomePage {
   
   getMarketStatus() {
     this.MarketService.getmarketstatus().subscribe(
-      data => {
-        console.log(data);
-        this.MarketStatus.Status = data.MarketStatuse;
-        this.MarketStatus.Time = data.Time;
-        this.MarketStatus.Datetime = data.Datetime;
-      },
-      Error => console.log(Error)
+      // data => {
+      //   // console.log(`getMarketStatus@home: ${data}`);
+      //   // console.log(data);
+      //   // this.MarketStatus.Status = data.MarketStatuse;
+      //   // this.MarketStatus.Time = data.Time;
+      //   // this.MarketStatus.Datetime = data.Datetime;
+      // },
+      // Error => console.log(Error)
     );
     setTimeout(() => {this.getMarketStatus();}, 5000);
 }

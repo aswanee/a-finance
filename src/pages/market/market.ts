@@ -95,13 +95,13 @@ export class MarketPage {
     this.MarketService.getindicestable().subscribe(
       data => {
         this.IndicesTable = data;
-        console.log(this.IndicesTable);
+        //console.log(this.IndicesTable);
       },
       Error => this.ErrorToast()
     );
     this.MarketService.getperformerstable().subscribe(data => {
       this.PerformersTable = data;
-      console.log(this.PerformersTable);
+      //console.log(this.PerformersTable);
     });
     this.MarketService.getindices("EGX30").subscribe(
       data => {
@@ -110,7 +110,7 @@ export class MarketPage {
         {
           this.showHideChart(0)
         }
-        console.log(this.EGX30);
+        //console.log(this.EGX30);
         //  this.Indices.push(this.EGX30);
       },
       Error => this.ErrorToast()
@@ -118,7 +118,7 @@ export class MarketPage {
     this.MarketService.getindices("EGX70").subscribe(
       data => {
         this.EGX70 = data;
-        console.log(this.EGX70);
+        //console.log(this.EGX70);
         //  this.Indices.push(this.EGX70);
       },
       Error => this.ErrorToast()
@@ -126,7 +126,7 @@ export class MarketPage {
     this.MarketService.getindices("EGX100").subscribe(
       data => {
         this.EGX100 = data;
-        console.log(this.EGX100);
+        //console.log(this.EGX100);
         //   this.Indices.push(this.EGX100);
       },
       Error => this.ErrorToast()
@@ -134,25 +134,25 @@ export class MarketPage {
     this.MarketService.getperformers("BP", window["isArabic"]).subscribe(
       data => {
         this.BP = data;
-        console.log(this.BP);
+        //console.log(this.BP);
       },
       Error => this.ErrorToast()
     );
     this.MarketService.getperformers("BV", window["isArabic"]).subscribe(
       data => {
         this.BV = data;
-        console.log(this.BV);
+        //console.log(this.BV);
       },
       Error => this.ErrorToast()
     );
     this.MarketService.getperformers("WP", window["isArabic"]).subscribe(
       data => {
         this.WP = data;
-        console.log(this.WP);
+        //console.log(this.WP);
       },
       Error => this.ErrorToast()
     );
-    console.log(this.Indices);
+    //console.log(this.Indices);
     this.initialized = true;
   }
   ionViewDidEnter() {
@@ -200,7 +200,7 @@ export class MarketPage {
     this.MarketService.getindicestable().subscribe(
       data => {
         this.IndicesTable = data;
-        console.log(this.IndicesTable);
+        //console.log(this.IndicesTable);
       },
       Error => {
         if (!this.isFired) {
@@ -212,7 +212,7 @@ export class MarketPage {
     this.MarketService.getperformerstable().subscribe(
       data => {
         this.PerformersTable = data;
-        console.log(this.PerformersTable);
+        //console.log(this.PerformersTable);
       },
       Error => {
         if (!this.isFired) {
@@ -235,7 +235,7 @@ export class MarketPage {
         this.egx30Dir = this.egxDir(this.egx30Dir,newVal,OldVal,"30");
         this.EGX30 = data;
 
-        console.log(this.EGX30);
+        //console.log(this.EGX30);
         // this.Indices.push(this.EGX30);
       },
       Error => {
@@ -259,7 +259,7 @@ export class MarketPage {
 
         this.egx70Dir = this.egxDir(this.egx70Dir,newVal,OldVal,"70");
         this.EGX70 = data;
-        console.log(this.EGX70);
+        //console.log(this.EGX70);
         // this.Indices.push(this.EGX70);
       },
       Error => {
@@ -284,7 +284,7 @@ export class MarketPage {
       this.egx100Dir = this.egxDir(this.egx100Dir,newVal,OldVal,"100");
       
       this.EGX100 = data;
-      console.log(this.EGX100);
+      //console.log(this.EGX100);
       //  this.Indices.push(this.EGX100);
     });
     switch(this.SelectedPerform)
@@ -293,7 +293,7 @@ export class MarketPage {
         this.MarketService.getperformers("BP", window["isArabic"]).subscribe(
           data => {
             this.BP = data;
-            console.log(this.BP);
+            //console.log(this.BP);
           },
           Error => {
             if (!this.isFired) {
@@ -307,7 +307,7 @@ export class MarketPage {
         this.MarketService.getperformers("BV", window["isArabic"]).subscribe(
           data => {
             this.BV = data;
-            console.log(this.BV);
+            //console.log(this.BV);
           },
           Error => {
             if (!this.isFired) {
@@ -321,7 +321,7 @@ export class MarketPage {
       this.MarketService.getperformers("WP", window["isArabic"]).subscribe(
         data => {
           this.WP = data;
-          console.log(this.WP);
+          //console.log(this.WP);
         },
         Error => {
           if (!this.isFired) {
@@ -337,7 +337,7 @@ export class MarketPage {
       setTimeout(() => {
         this.refresh();
       }, marketRefresh);
-      console.log("refresh");
+      //console.log("refresh");
     }
   }
   setstockchosen(reuter: string) {
@@ -387,7 +387,7 @@ export class MarketPage {
   }
   getstockchosen(stockchosen) {
     this.stockchosen = stockchosen;
-    console.log(this.stockchosen);
+    //console.log(this.stockchosen);
   }
   showLastFiveDays() {
     this.lastFveDays = !this.lastFveDays;
